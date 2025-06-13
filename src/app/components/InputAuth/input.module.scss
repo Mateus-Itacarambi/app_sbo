@@ -1,0 +1,67 @@
+@import "../../styles/variaveis";
+
+.input_field {
+    label {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 400;
+        margin-bottom: .7rem;
+    }
+  
+    input, textarea {
+        box-sizing: border-box;
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: $cinza11;
+        width: 100%;
+        height: 54px;
+        padding: 1.5rem 1rem;
+        border: 2px solid $cinza7;
+        border-radius: .6rem;
+        margin-bottom: 3rem;
+        outline: none;
+        transition: .3s;
+
+        &:focus, &:hover { 
+            border: 2px solid $verde9;
+        }
+
+        &:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s;
+            box-shadow: inset 0 0 20px 20px white;
+        }
+
+        &:disabled {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: $cinza9;
+            border: 2px solid $cinza2_1;
+            background-color: $cinza2;
+        }
+
+        
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox */
+        &[type=number] {
+        -moz-appearance: textfield;
+        }
+    }
+
+    textarea {
+        font-family: "Inter", sans-serif;
+        font-weight: 300;
+        color: $cinza12;
+        height: 12rem;
+        resize: none;
+        margin-bottom: 1rem;
+    }
+  }
+  

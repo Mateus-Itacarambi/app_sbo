@@ -1,0 +1,178 @@
+@import "../../styles/variaveis";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  pointer-events: none;
+  transition: background 0.3s ease;
+  z-index: 1000;
+
+  &.aberto {
+    background: rgba(0, 0, 0, 0.3);
+    pointer-events: all;
+  }
+}
+
+.aside {
+  position: absolute;
+  top: 0;
+  right: -650px;
+  width: 450px;
+  height: 100vh;
+  background-color: #fff;
+  color: $cinza12;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  padding-top: 1rem;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    font-size: 2.3rem;
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid $cinza3;
+  }
+
+  .solicitacoes {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 2px solid $cinza3;
+    gap: 1rem;
+
+    .icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      border: 2px solid $cinza5;
+      color: $cinza12;
+    }
+
+    p {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.2rem;
+      font-weight: 700;
+      gap: .3rem;
+
+      span {
+        font-weight: 400;
+        color: $cinza9;
+      }
+    }
+
+    .sinal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      right: -4px;
+      top: 0;
+      background-color: red;
+      font-size: 1rem;
+      border-radius: 50%;
+      color: white;
+      border: 3px solid white;
+    }
+
+    &:hover {
+      background-color: $cinza3;
+      cursor: pointer;
+
+      .sinal {
+        border: 3px solid $cinza3;
+      }
+    }
+  }
+
+  .overlay.aberto & {
+    right: 0;
+  }
+
+  ul {
+    height: calc(100vh - 5.2rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style: none;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+
+      li {
+        position: relative;
+        padding: 1rem 2rem;
+        border-bottom: 2px solid $cinza3;
+        height: fit-content;
+
+        p {
+          margin: 0;
+          font-size: 1.2rem;
+          font-weight: 600;
+          line-height: 1.3rem;
+          margin-bottom: .3rem;
+
+          span {
+            color: $verde10;
+            text-decoration: none;
+            transition: color 0.3s;
+          }
+        }
+
+        small {
+          font-size: 0.95rem;
+          color: $cinza10;
+        }
+
+        .lida {
+          position: absolute;
+          top: 50%;
+          left: .7rem;
+          width: .5rem;
+          height: .5rem;
+          background-color: $verde10;
+          border-radius: 50%;
+        }
+
+        &:hover {
+          background-color: $cinza3;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.marcar_todos {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid $cinza3;
+  border-top: 2px solid $cinza3;
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: $cinza12;
+  bottom: 0;
+  left: 0;
+
+  &:hover {
+    background-color: $cinza3;
+    cursor: pointer;
+  }
+}

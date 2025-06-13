@@ -1,0 +1,456 @@
+diff --git a/src/app/(auth)/atualizar-cadastro/page.tsx b/src/app/(auth)/atualizar-cadastro/page.tsx
+index 45a532770c93c59c8a3d02cd33fee1d8a9d3fb7a..9248218e5857664a8e6e60162a593dc0d6c0f62c 100644
+--- a/src/app/(auth)/atualizar-cadastro/page.tsx
++++ b/src/app/(auth)/atualizar-cadastro/page.tsx
+@@ -36,51 +36,51 @@ export default function AtualizarCadastro() {
+     if (usuario) {
+       if (usuario.role !== "PROFESSOR" || usuario.cadastroCompleto === true) {
+         router.push("/");
+       }
+       setFormData({ ...usuario });
+     }
+   }, [usuario]);
+ 
+   const handleAtualizarCadastro = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setIsLoading(true);
+ 
+     const professor = {
+       id: formData.id,
+       nome: formData.nome,
+       dataNascimento,
+       genero,
+       email: formData.email,
+       senhaAtual,
+       senhaNova,
+       senhaConfirmar,
+       idLattes,
+     };
+ 
+     try {
+-      const response = await fetch(`http://localhost:8080/professores/atualizar-cadastro`, {
++      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/professores/atualizar-cadastro`, {
+         method: "PUT",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         credentials: "include",
+         body: JSON.stringify(professor),
+       });
+ 
+       if (!response.ok) {
+         const errorData = await response.text();
+         throw new Error(errorData || "Erro ao atualizar cadastro!");
+       }
+ 
+       localStorage.setItem("mensagemSucesso", "Atualizado com sucesso!");
+       location.reload();
+     } catch (error: any) {
+       console.error("Erro ao atualizar cadastro:", error);
+       setErro(error.message || "Erro desconhecido.");
+       setSucesso("");
+     } finally {
+       setIsLoading(false);
+     }
+   };
+ 
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+diff --git a/src/app/(auth)/estudante-cadastro/page.tsx b/src/app/(auth)/estudante-cadastro/page.tsx
+index ae6ed06585b8cdec5d27daaf0adcd63a5351d04a..0d5aa2a248a5e05bc4a8da958764529b339ab8a7 100644
+--- a/src/app/(auth)/estudante-cadastro/page.tsx
++++ b/src/app/(auth)/estudante-cadastro/page.tsx
+@@ -24,51 +24,51 @@ export default function Cadastro() {
+   const [semestresDisponiveis, setSemestresDisponiveis] = useState<
+     { value: number; label: string }[]
+   >([]);
+   const [erro, setErro] = useState("");
+   const [sucesso, setSucesso] = useState("");
+   const [mostrarMensagem, setmostrarMensagem] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
+ 
+   useEffect(() => {
+     if (erro || sucesso) {
+       setmostrarMensagem(true);
+ 
+       const timer = setTimeout(() => {
+         setmostrarMensagem(false);
+         setErro("");
+         setSucesso("");
+       }, 3000);
+ 
+       return () => clearTimeout(timer);
+     }
+   }, [erro, sucesso]);
+ 
+   useEffect(() => {
+     async function fetchCursos() {
+       try {
+-        const response = await fetch("http://localhost:8080/cursos/lista");
++        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cursos/lista`);
+ 
+          if (!response.ok) {
+           const errorData = await response.text();
+           throw new Error(errorData || "Erro ao buscar cursos");
+         }
+         
+         const data = await response.json();
+ 
+         setCursos(
+           data.map((curso: any) => ({
+             value: curso.id,
+             label: curso.nome,
+             semestres: curso.semestres,
+           }))
+         );
+       } catch (error) {
+         console.error("Erro ao buscar cursos:", error);
+       }
+     }
+ 
+     fetchCursos();
+   }, []);
+ 
+   const handleCursoChange = (cursoId: string) => {
+     setCurso(cursoId);
+@@ -83,51 +83,51 @@ export default function Cadastro() {
+           value: i + 1,
+           label: `${i + 1}º Semestre`,
+         })
+       );
+       setSemestresDisponiveis(semestres);
+       setSemestre("");
+     }
+   };
+ 
+   const handleSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setIsLoading(true);
+ 
+     const estudante = {
+       nome,
+       dataNascimento,
+       genero,
+       email,
+       senha,
+       matricula,
+       semestre: Number(semestre),
+       idCurso: Number(curso),
+     };
+ 
+     try {
+-      const response = await fetch("http://localhost:8080/estudantes", {
++      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/estudantes`, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify(estudante),
+       });
+ 
+       if (!response.ok) {
+         const errorData = await response.text();
+         throw new Error(errorData || "Erro ao cadastrar estudante");
+       }
+ 
+       setSucesso("Estudante cadastrado com sucesso!");
+       setErro("");
+     } catch (error: any) {
+       console.error("Erro ao cadastrar estudante:", error);
+ 
+       if (error.message.includes("Failed to fetch")) {
+         setErro("Erro ao conectar ao servidor.");
+       } else {
+         setErro(error.message || "Erro desconhecido.");
+       }
+ 
+       setSucesso("");
+     } finally {
+diff --git a/src/app/(auth)/login/page.tsx b/src/app/(auth)/login/page.tsx
+index a2acdb0b95fd8ba8f8ba500e0767dce24489956f..c6d3764bbc4fa83ba1fd8e98e3a5445f1fa804cb 100644
+--- a/src/app/(auth)/login/page.tsx
++++ b/src/app/(auth)/login/page.tsx
+@@ -24,51 +24,51 @@ export default function Login() {
+       router.push("/");
+     }
+   }, [usuario]);
+ 
+   useEffect(() => {
+     if (erro || sucesso) {
+       setmostrarMensagem(true);
+ 
+       const timer = setTimeout(() => {
+         setmostrarMensagem(false);
+         setErro("");
+         setSucesso("");
+       }, 3000);
+ 
+       return () => clearTimeout(timer);
+     }
+   }, [erro, sucesso]);
+ 
+   
+ 
+   const handleLogin = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setIsLoading(true);
+ 
+     try {
+-      const response = await fetch("http://localhost:8080/auth/login", {
++      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+         method: "POST",
+         credentials: "include",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({ email, senha }),
+       });
+ 
+       if (response.ok) {
+         const data = await response.json();
+         router.push("/");
+ 
+       } else {
+         const error = await response.text();
+         setErro(error);
+         console.error("Erro ao fazer login:", error);
+       }
+     } catch (error: any) {
+       console.error("Erro ao fazer login:", error);
+       setErro("Erro ao conectar ao servidor.");
+     } finally {
+       setIsLoading(false);
+     }
+   };
+ 
+diff --git a/src/app/(main)/area-interesse-cadastro/page.tsx b/src/app/(main)/area-interesse-cadastro/page.tsx
+index cd1c9df231c8e2e9d79eafb4406d91a661446475..69af6ced5d93ad6273aeb54a28006af30edcd6be 100644
+--- a/src/app/(main)/area-interesse-cadastro/page.tsx
++++ b/src/app/(main)/area-interesse-cadastro/page.tsx
+@@ -15,51 +15,51 @@ export default function UploadAreaInteresse() {
+   const [file, setFile] = useState<File | null>(null);
+   const { erro, sucesso, isLoading, mostrarAlerta, setErro, setSucesso, setIsLoading } = useAlertaTemporarioContext();
+ 
+   useEffect(() => {
+     if (usuario) {
+       if (usuario.role !== "ADMINISTRADOR") {
+         router.push("/");
+       }
+       setFormData({ ...usuario });
+     }
+   }, [usuario]);
+ 
+   const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+     const selectedFile = e.target.files?.[0] || null;
+     setFile(selectedFile);
+   };
+   
+   const handleFileUpload = async () => {
+     if (!file) return;
+     setIsLoading(true);
+   
+     const formData = new FormData();
+     formData.append("file", file);
+   
+     try {
+-      const response = await fetch('http://localhost:8080/areasInteresse/importar-relatorio-csv', {
++      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/areasInteresse/importar-relatorio-csv`, {
+         method: 'POST',
+         body: formData,
+         credentials: "include",
+       });
+   
+       if (response.ok) {
+         const blob = await response.blob();
+         const url = window.URL.createObjectURL(blob);
+         const a = document.createElement("a");
+         a.href = url;
+         a.download = "relatorio_importacao_area_interesse.csv";
+         document.body.appendChild(a);
+         a.click();
+         a.remove();
+         setSucesso("Arquivo processado com sucesso!");
+         setErro("");
+       } else {
+         const errorData = await response.text();
+         throw new Error(errorData || "Erro ao processar arquivo!");
+       }
+     } catch (error: any) {
+       console.error("Erro ao processar arquivo:", error);
+       setErro(error.message || "Erro desconhecido.");
+       setSucesso("");
+     } finally {
+diff --git a/src/app/(main)/professor-cadastro/page.tsx b/src/app/(main)/professor-cadastro/page.tsx
+index d54a50dfc67f9b0a2e6db5a891a147cd61d31128..f02fffb25ab40b64827841723b6b402a326d9376 100644
+--- a/src/app/(main)/professor-cadastro/page.tsx
++++ b/src/app/(main)/professor-cadastro/page.tsx
+@@ -15,51 +15,51 @@ export default function UploadProfessores() {
+   const [file, setFile] = useState<File | null>(null);
+   const { erro, sucesso, isLoading, mostrarAlerta, setErro, setSucesso, setIsLoading } = useAlertaTemporarioContext();
+ 
+   useEffect(() => {
+     if (usuario) {
+       if (usuario.role !== "ADMINISTRADOR") {
+         router.push("/");
+       }
+       setFormData({ ...usuario });
+     }
+   }, [usuario]);
+ 
+   const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+     const selectedFile = e.target.files?.[0] || null;
+     setFile(selectedFile);
+   };
+   
+   const handleFileUpload = async () => {
+     if (!file) return;
+     setIsLoading(true);
+   
+     const formData = new FormData();
+     formData.append("file", file);
+   
+     try {
+-      const response = await fetch('http://localhost:8080/professores/importar-relatorio-csv', {
++      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/professores/importar-relatorio-csv`, {
+         method: 'POST',
+         body: formData,
+         credentials: "include",
+       });
+   
+       if (response.ok) {
+         const blob = await response.blob();
+         const url = window.URL.createObjectURL(blob);
+         const a = document.createElement("a");
+         a.href = url;
+         a.download = "relatorio_importacao_professores.csv";
+         document.body.appendChild(a);
+         a.click();
+         a.remove();
+         setSucesso("Arquivo processado com sucesso!");
+         setErro("");
+       } else {
+         const errorData = await response.text();
+         throw new Error(errorData || "Erro ao processar arquivo!");
+       }
+     } catch (error: any) {
+       console.error("Erro ao processar arquivo:", error);
+       setErro(error.message || "Erro desconhecido.");
+       setSucesso("");
+     } finally {
+diff --git a/src/app/components/Perfil/Perfil.tsx b/src/app/components/Perfil/Perfil.tsx
+index 55ce1cb7f19b47907ff54431cd8f5707505cc5f9..518ea3a63cbaf0322c7d005997a12e1e4a640b70 100644
+--- a/src/app/components/Perfil/Perfil.tsx
++++ b/src/app/components/Perfil/Perfil.tsx
+@@ -14,51 +14,51 @@ import ModalTemaProfessor from "@/components/Modal/Professor/ModalTemaProfessor"
+ import PerfilCabecalho from "@/components/Perfil/PerfilCabecalho";
+ import CardInfo from "@/components/Perfil/CardInfo";
+ import PerfilEstudante from "@/components/Perfil/Estudante/PerfilEstudante";
+ import PerfilProfessor from "./Professor/PerfilProfessor";
+ 
+ import { useAlertaTemporarioContext } from "@/contexts/AlertaContext";
+ import { useModal, useFormulario, useCursos, useOrientador, useTemaActions, usePerfilActions, useFormacaoActions, useFormacoes, useTemas, useAreaInteresseActions } from "@/hooks";
+ import { AreaInteresse, Curso, CursoProfessor, Estudante, Formacao, FormacaoDTO, Professor, TemaDTO, UsuarioCompleto } from "@/types";
+ import ModalGerenciarFormacoes from "../Modal/Professor/ModalGerenciarFormacoes";
+ import ModalGerenciarTemas from "../Modal/Professor/ModalGerenciarTemas";
+ import { useAreasInteresse } from "@/hooks/useAreasInteresse";
+ import ModalAreaInteresse from "../Modal/Professor/ModalAreaInteresse";
+ import ModalCurso from "../Modal/Professor/ModalCurso";
+ import { useCursosActions } from "@/hooks/useCursosActions";
+ import { useSolicitacaoActions } from "@/hooks/useSolicitacaoActions";
+ 
+ interface PerfilProps {
+   usuarioVisualizado: Estudante | Professor | null;
+ }
+ 
+ export default function Perfil({ usuarioVisualizado }: PerfilProps) {
+   const [UsuarioCompleto, setUsuarioCompleto] = useState<UsuarioCompleto | null>(null);
+ 
+   useEffect(() => {
+   const buscarDadosCompletos = async () => {
+-    const res = await fetch("http://localhost:8080/auth/me", {
++    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+       credentials: "include",
+     });
+     const data = await res.json();
+     setUsuarioCompleto(data);
+   };
+ 
+   buscarDadosCompletos();
+ }, []);
+ 
+ 
+   if (!usuarioVisualizado) return <p>Usuário não encontrado.</p>;
+ 
+   const isMeuPerfil = UsuarioCompleto?.id === usuarioVisualizado.id;
+ 
+   const professor = usuarioVisualizado?.role === "PROFESSOR" ? (usuarioVisualizado as Professor) : null;
+   const estudante = usuarioVisualizado?.role === "ESTUDANTE" ? (usuarioVisualizado as Estudante) : null;
+ 
+   const { erro, sucesso, isLoading, mostrarAlerta } = useAlertaTemporarioContext();
+ 
+   const modal = useModal(usuarioVisualizado);
+   const form = useFormulario({});
+   const cursos = useCursos(usuarioVisualizado, form.formData);
+   const { orientador } = useOrientador(usuarioVisualizado);
+   const perfilActions = usePerfilActions(usuarioVisualizado, form.formData);
+   const temaActions = useTemaActions(usuarioVisualizado);
+diff --git a/src/app/contexts/AuthContext.tsx b/src/app/contexts/AuthContext.tsx
+index ac6862359b34621128f340f30022018008d11d62..478a72703b6b08b9d267c493606d557efc3a48cd 100644
+--- a/src/app/contexts/AuthContext.tsx
++++ b/src/app/contexts/AuthContext.tsx
+@@ -29,51 +29,51 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resumo`, {
+           credentials: "include",
+         });
+ 
+         if (!res.ok) {
+           router.push("/login");
+           return;
+         }
+ 
+         if (res.ok) {
+           const data = await res.json();
+           setUsuario(data);
+         }
+       } catch (error) {
+         console.error("Erro ao buscar usuário:", error);
+       } finally {
+         setLoading(false);
+       }
+     };
+ 
+     fetchUsuario();
+   }, []);
+ 
+   const logout = async () => {
+     try {
+-      await fetch("http://localhost:8080/auth/logout", {
++      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+         method: "POST",
+         credentials: "include",
+       });
+       setUsuario(null);
+       router.push("/login");
+     } catch (err) {
+       console.error("Erro ao fazer logout:", err);
+       router.push("/login");
+     }
+   };
+ 
+   return (
+     <AuthContext.Provider value={{ usuario, setUsuario, loading, logout }}>
+       {children}
+     </AuthContext.Provider>
+   );
+ };
+ 
+ export const useAuth = (): AuthContextType => {
+     const context = useContext(AuthContext);
+     if (context === undefined) {
+       throw new Error("useAuth deve ser usado dentro de um AuthProvider");
+     }
+     return context;
+   };
+\ No newline at end of file
+ 
+EOF
+)

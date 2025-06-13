@@ -1,0 +1,442 @@
+@import "../../styles/variaveis";
+
+.main {
+  height: calc(100vh - 8rem);
+  display: flex;
+  justify-content: center;
+  background-color: $cinza3;
+  padding: 2rem 0;
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: $verde9;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    overflow-y: scroll;
+    padding: 0 1rem 1rem 2rem;
+
+    &::-webkit-scrollbar
+    {
+        width: 8px;
+        border-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+        border-radius: 15px;
+        background-color: $verde9;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $verde10;
+        }
+    }
+
+    .card_container {
+      background-color: white;
+      padding: 2rem;
+      display: flex;
+      border-radius: 1.5rem;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+      gap: 2rem;
+      box-shadow: rgba(72, 121, 72, 0.245) 0px 3px 6px, rgba(72, 121, 72, 0.048) 0px 3px 6px;
+
+      p {
+        font-size: 1.6rem;
+        color: $cinza11;
+      }
+    }
+  }
+}
+
+.card_perfil {
+  display: grid;
+  grid-template-columns: .5fr 4fr 2.5fr;
+  gap: 3rem;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 100%;
+  border: 3px solid $verde4;
+        
+  .detalhes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: $verde9;
+    }
+  
+    p {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: $cinza10;
+    }
+
+    label {
+      color: $cinza12;
+    }
+
+    strong {
+      color: $verde10;
+    }
+  }
+  
+  .editar {
+    text-align: end;
+
+    button {
+      width: 12rem;
+      height: auto;
+      margin: auto;
+      margin-left: 1rem;
+      padding: .8rem 2rem;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &.editBtn {
+        background-color: $verde9;
+
+        &:hover {
+          background-color: $verde10;
+        }
+      }
+    }
+  }
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 100%;
+  border: 3px solid $verde4;
+  justify-content: space-between;
+
+  h2 {
+    margin-right: .5rem;
+  }
+
+  &_formacao, &_temas, &_areasInteresse, &_cursos {
+    padding: 2rem;
+    border: 3px solid $verde4;
+    width: 100%;
+    border-radius: 2rem;
+
+    button {
+      height: auto;
+      padding: .8rem 2rem;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin: 0;
+    }
+
+    .lista_temas, .lista_formacoes {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .lista_cursos {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      button.adicionar {
+        margin-top: 1rem;
+      }
+    }
+
+    .lista_areasInteresse {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 2rem;
+    }
+
+    li {
+      border: none;
+      padding: 0;
+      display: flex;
+      gap: 2rem;
+
+      .periodo {
+        min-width: 100px;
+
+        p {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+
+      p {
+        max-width: 700px;
+        line-height: 2rem;
+      }
+
+      strong {
+        font-weight: 600;
+      }
+    }
+    
+    .titulo {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: $cinza11;
+      align-items: center;
+      margin-bottom: 2rem;
+    
+      a {
+        display: none;
+      }
+    
+      button:nth-child(1) {
+        width: 0;
+        height: 0;
+        background-color: white;
+      }
+    
+      button:nth-child(2), button:nth-child(3), button:nth-child(4), button:nth-child(5), button:nth-child(6) {
+        background-color: white;
+        color: $cinza12;
+        font-size: 1.5rem;
+        font-weight: 400;
+        padding: .5rem 1rem;
+        border-radius: 0 0 3px 3px;
+    
+        &:hover {
+          background-color: #f3f4f6;
+        }
+      }
+    
+      .icon {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+  }
+
+  &_temas, &_areasInteresse {
+    .titulo {
+      margin-bottom: 0;
+    }
+
+    .lista_temas {
+      gap: 0;
+    }
+  }
+
+  &_tema, &_temas, &_areasInteresse {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 100%;
+    border: 3px solid $verde4;
+
+    p {
+      margin: 2rem 0;
+    }
+
+    button {
+      width: 100%;
+      height: auto;
+      padding: .8rem 2rem;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin: 0;
+    }
+
+    .tema, .areaInteresse, .curso {
+      display: flex;
+      border-radius: 16px;
+      border: 3px solid $verde4;
+      margin-top: 2rem;
+    
+      .tema_content {
+        width: 100%;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    
+        .title {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 9fr 1fr;
+          align-items: center;
+          font-size: 1.8rem;
+          font-weight: 600;
+          color: $cinza11;
+
+          a {
+            display: none;
+          }
+
+          button {
+            background-color: white;
+            color: $cinza12;
+            font-size: 1.5rem;
+            font-weight: 400;
+            padding: .5rem 1rem;
+            border-radius: 0 0 3px 3px;
+
+            &.solicitar {
+              background-color: $verde9;
+              border-radius: 2rem;
+              color: white;
+              font-weight: 600;
+
+              &:hover {
+                background-color: $verde11;
+              }
+            }
+
+            &.cancelar {
+                background-color: $vermelho9;
+                border-radius: 2rem;
+                color: white;
+                font-weight: 600;
+
+                &:hover {
+                    background-color: $vermelho11;
+                }
+
+                &:disabled{
+                    background-color: $vermelho11;
+                }
+            }
+
+            &:hover {
+              background-color: #f3f4f6;
+            }
+          }
+        }
+    
+        .keywords {
+          font-size: 1.4rem;
+          color: #666;
+        }
+    
+        .description {
+          max-width: 850px;
+          font-size: 1.4rem;
+          line-height: 1.8rem;
+          color: #444;
+        }
+    
+        .status {
+          font-size: 1.4rem;
+          padding: 4px 8px;
+          border-radius: 12px;
+          background-color: $verde4;
+          color: $verde11;
+          width: fit-content;
+        }
+      }
+    }
+
+    .areaInteresse {
+      margin-top: 1rem;
+    }
+    
+  }
+  
+  &_areasInteresse, &_cursos {
+    p {
+      margin-bottom: 0;
+    }
+
+    .adicionar {
+      width: 100%;
+      height: auto;
+      margin-top: 2rem;
+      padding: 8px 14px;
+      background-color: $verde9;
+      font-size: 1.5rem;
+
+      &:hover {
+        background-color: $verde11;
+      }
+    }
+  }
+
+  &_orientador {
+    width: 100%;
+    padding: 2rem;
+    border: 3px solid $verde4;
+    border-radius: 20px;
+    box-sizing: border-box;
+
+    button {
+      width: 100%;
+      height: auto;
+      padding: .8rem 2rem;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin: 0;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+    }
+
+    .card_perfil {
+      width: 100%;
+    }
+
+    p {
+    
+    &.status {
+      font-size: 1.4rem;
+      padding: 4px 8px;
+      border-radius: 12px;
+      background-color: $verde4;
+      color: $verde11;
+      width: fit-content;
+    }
+  }
+}
+
+  form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+  }
+
+}

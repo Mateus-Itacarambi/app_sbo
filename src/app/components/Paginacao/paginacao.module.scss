@@ -1,0 +1,63 @@
+@import "../../styles/variaveis";
+
+.paginacao {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 3rem;
+    box-shadow: rgba(103, 117, 103, 0.245) 0px 3px 6px, rgba(72, 121, 72, 0.048) 0px 3px 6px;
+
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $cinza11;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        border: 2px solid $verde9;
+        border-radius: 2rem;
+        padding: .5rem 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: .3s;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.prev {
+            background-color: white;
+            padding-right: 1.7rem;
+            color: $verde9;
+
+            &:hover {
+                background-color: $cinza3;
+            }
+        }
+
+        &.next {
+            background-color: $verde9;
+            padding-left: 1.7rem;
+            color: white;
+
+            &:hover {
+                background-color: $verde10;
+                border: 2px solid $verde10;
+            }
+        }
+
+        &.next:disabled, &.prev:disabled {
+            color: $cinza7;
+            background-color: white;
+            border: 2px solid $cinza7;
+            cursor: default;
+        }
+    }
+}

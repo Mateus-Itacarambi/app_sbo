@@ -1,0 +1,119 @@
+@import "../../styles/variaveis";
+
+.nav {
+  background-color: $verde9;
+  font-weight: 500;
+  z-index: 1000;
+
+  &__container {
+    height: 8rem;
+    display: flex;
+    max-width: 1600px;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__ul {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__li {
+    .ativo {
+      background-color: $verde11;
+
+      &:hover {
+        background-color: $verde11;
+      }
+    }
+
+    a {
+      padding: 0.8rem 2.5rem;
+      border-radius: 2.5rem;
+      font-size: 1.8rem;
+      color: white;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: $verde10;
+      }
+    }
+  }
+
+  &__button {
+    transition: 0.4s;
+    background-color: white;
+    width: 13rem;
+    padding: 1rem 0;
+    border-radius: 2.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: $verde10;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+
+  .actions {
+    width: 13rem;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 100px;
+
+    .userSection {
+      display: flex;
+      align-items: center;
+      width: 13rem;
+      justify-content: space-between;
+
+      .profile {
+        width: 4.5rem;
+        height: 4.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $verde9;
+      }
+
+      .profileImage {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .initials {
+        font-size: 2rem;
+      }
+
+      .notificacao {
+        position: relative;
+        cursor: pointer;
+        background-color: transparent;
+        padding: 0;
+        border: none;
+
+        .sinal {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          width: 1.1rem;
+          height: 1.1rem;
+          right: 2px;
+          top: 2px;
+          background-color: red;
+          font-size: 1rem;
+          border-radius: 50%;
+          color: white;
+          border: 2px solid $verde9;
+        }
+      }
+    }
+  }
+}

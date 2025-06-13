@@ -1,0 +1,68 @@
+@import "../../styles/variaveis";
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .modal {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: slideUp 0.3s ease;
+
+    ul {
+      max-height: 550px;
+      overflow-y: scroll;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: $verde9;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      font-size: 1.8rem ;
+      color: $cinza10;
+      margin-bottom: 2rem;
+    }
+  }
+
+.flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+}
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  

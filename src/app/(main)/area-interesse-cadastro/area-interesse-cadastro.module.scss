@@ -1,0 +1,112 @@
+@import "../../styles/variaveis";
+
+.main {
+    height: calc(100vh - 12rem);
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    background-color: $cinza3;
+  
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      overflow-y: scroll;
+      padding: 0 1rem 1rem 2rem;
+  
+      &::-webkit-scrollbar
+      {
+          width: 8px;
+          border-radius: 8px;
+      }
+  
+      &::-webkit-scrollbar-thumb
+      {
+          border-radius: 15px;
+          background-color: $verde9;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: $verde10;
+          }
+      }
+
+      .card_container {
+        background-color: white;
+        display: flex;
+        border-radius: 1.5rem;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: rgba(154, 165, 149, 0.352) 0px 8px 24px;
+
+        h2 {
+            color: $verde9;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        p {
+          font-size: 1.6rem;
+          font-weight: 500;
+          color: $cinza12;
+          margin-bottom: 1rem;
+        }
+
+        p:nth-child(4) {
+          font-size: 1.2rem;
+          color: $cinza12;
+        }
+
+        input {
+          font-weight: 300;
+          color: $cinza11;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.8rem;
+          margin: 2rem 0;
+        }
+
+        .exemplo {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr;
+          align-items: center;
+
+          p {
+            padding: 0;
+            margin: 0;
+            color: $cinza11;
+          }
+
+          p:nth-child(1) {
+            margin-top: 1rem;
+            border-bottom: 2px solid $cinza6;
+            padding-bottom: 1rem;
+          }
+
+          p:nth-child(2) {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+          }
+        }
+
+        .obs {
+          display: block;
+          background-color: $verde5;
+          padding: 1.5rem 1rem;
+          margin: 1rem 0;
+          border-radius: 1rem;
+          font-size: 1.5rem;
+          color: $cinza12;
+
+          strong {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+}

@@ -1,0 +1,40 @@
+@import "../../styles/variaveis";
+@import "../auth.module.scss";
+
+.login {
+    h1 {
+        font-size: 4.3rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    a {
+        color: $verde9;
+
+        &:nth-child(3) {
+            text-decoration: underline;
+            text-align: right;
+        }
+    }
+
+    p {
+        font-size: 1.6rem;
+        font-weight: 600;
+
+        span {
+            color: $verde9;
+            
+        }
+
+        &:nth-child(7) {
+            text-align: center;
+        }
+
+        &:nth-child(2) {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 5rem;
+            color: $cinza10;
+        }
+    }
+}

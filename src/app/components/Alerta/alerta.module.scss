@@ -1,0 +1,32 @@
+@import "../../styles/variaveis";
+
+.mensagem {
+    box-sizing: border-box;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 1.5rem;
+    border-radius: 5px;
+    transition: .3s;
+    z-index: 1001;
+
+    &.erro {
+        background-color: $vermelho4;
+        color: $vermelho9;
+        border: 2px solid $vermelho9;
+    }
+
+    &.alerta {
+        background-color: $amarelo2;
+        color: $amarelo10;
+        border: 2px solid $amarelo10;
+    }
+
+    &.sucesso {
+        background-color: $verde5;
+        color: $verde9;
+        border: 2px solid $verde9;
+    }
+  }

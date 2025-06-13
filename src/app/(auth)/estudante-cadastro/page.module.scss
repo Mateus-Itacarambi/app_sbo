@@ -1,0 +1,40 @@
+@import "../../styles/variaveis";
+@import "../auth.module.scss";
+
+.cadastro {
+    max-width: 85rem;
+    width: 100%;
+
+    h1 {
+        font-size: 5rem;
+        font-weight: 400;
+        margin-bottom: 1rem;
+    }
+
+    form {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
+
+        button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+    }
+
+    p {
+        font-size: 1.6rem;
+        font-weight: 600;
+
+        a {
+            color: $verde9;
+        }
+
+        &:nth-child(2) {
+            color: $cinza10;
+            margin-bottom: 3rem;
+            font-weight: 500;
+        }
+    }
+}

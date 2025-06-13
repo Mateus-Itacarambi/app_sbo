@@ -1,0 +1,114 @@
+@import "../../styles/variaveis";
+
+.select_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  width: 100%;
+  height: 54px;
+  font-size: 1.6rem;
+  color: $cinza11;
+  border: 2px solid $cinza6;
+  border-radius: .6rem;
+  margin-bottom: 3rem;
+
+  &:hover {
+    border: 2px solid $verde9;
+  }
+  
+  &.disabled {
+    background-color: $cinza2_2;
+
+    &:hover {
+      border: 2px solid $cinza7;
+    }
+  }
+
+  &.aberto {
+      border: 2px solid $verde9;
+
+      .icone {
+          color: $verde10;
+      }
+  }
+}
+
+.label {
+  display: block;
+  font-size: 1.6rem;
+  margin-bottom: .7rem;
+}
+
+.select_display {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 300;
+  border-radius: .6rem;
+  
+  &.disabled {
+    background-color: $cinza2_1;
+    cursor: default;
+  }
+
+  .placeholder {
+    color: $cinza8;
+  }
+}
+
+.icone {
+  color: $cinza8;
+}
+
+.options_list {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: -2px;
+  right: -2px;
+  max-height: 160px;
+  overflow-y: auto;
+  background-color: white;
+  border: 2px solid $cinza7;
+  z-index: 100;
+  border-radius: .6rem;
+
+  &.aberto {
+      border: 2px solid $verde9;
+  }
+
+  &::-webkit-scrollbar
+  {
+      width: 15px;
+      border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb
+  {
+      border-radius: 15px;
+      background-color: $verde9;
+      border: 4px solid white;
+      cursor: pointer;
+
+      &:hover {
+      background-color: $verde10;
+      }
+  }
+}
+
+.option_item {
+  padding: .5rem 0;
+  cursor: pointer;
+  font-weight: 300;
+  color: $cinza11;
+  padding-left: 1rem;
+
+  &:hover {
+    background-color: $cinza3;
+  }
+}

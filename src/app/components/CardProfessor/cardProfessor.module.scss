@@ -1,0 +1,66 @@
+@import "../../styles/variaveis";
+
+.card_perfil {
+  display: grid;
+  grid-template-columns: .5fr 4fr 2.5fr;
+  gap: 3rem;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 100%;
+  border: 3px solid $verde4;
+        
+  .detalhes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: $verde9;
+    }
+  
+    p {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: $cinza10;
+    }
+
+    label {
+      color: $cinza12;
+    }
+
+    strong {
+      color: $verde10;
+    }
+  }
+  
+  .editar {
+    text-align: end;
+
+    button {
+      width: 12rem;
+      height: auto;
+      margin: auto;
+      margin-left: 1rem;
+      padding: .8rem 2rem;
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &.editBtn {
+        background-color: $verde9;
+
+        &:hover {
+          background-color: $verde10;
+        }
+      }
+    }
+  }
+}

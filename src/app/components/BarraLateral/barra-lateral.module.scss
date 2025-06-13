@@ -1,0 +1,22 @@
+@import "../../styles/variaveis";
+
+.container {
+    display: flex;
+}
+
+.barra_lateral {
+    background-color: $verde9;
+    height: 100vh;
+    padding: 1.2rem 0;
+
+    .logo {
+        padding: 0 16rem;
+    }
+
+    .imagem {
+        height: calc(100vh - 8rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

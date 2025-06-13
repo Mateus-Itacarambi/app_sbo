@@ -1,0 +1,118 @@
+@import "../../styles/variaveis";
+
+.container {
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid $cinza6;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    color: $cinza11;
+    transition: .3s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.aberto {
+        border: 2px solid $verde9;
+
+        .icone {
+            color: $verde10;
+        }
+    }
+
+    .labelRow {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+            font-size: 1.6rem;
+        }
+
+        button {
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            border: none;
+            background-color: white;
+            color: $cinza8;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .dropdownMenu {
+        max-height: 200px;
+        position: relative;
+
+        .inputComIcone {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-top: .5rem;
+
+            input {
+                width: 100%;
+                font-size: 1.6rem;
+                padding: 1rem;
+                border-radius: 1rem;
+                border: 2px solid $cinza6;
+                transition: .3s;
+                color: $cinza11;
+                padding-right: 3.5rem;
+
+                &:focus {
+                    outline: none;
+                    border: 2px solid $verde9;
+                }
+
+                &::placeholder {
+                    color: $cinza8;
+                }
+            }
+
+            .icone {
+                position: absolute;
+                right: 1rem;
+                cursor: pointer;
+                color: $cinza7;
+            }
+
+            &:focus-within .icone {
+                color: $verde10;
+            }
+        }
+
+        .erro {
+            position: absolute;
+            left: 0;
+            right: 0;
+            background-color: $vermelho4;
+            border: 2px solid $vermelho8;
+            color: $vermelho11;
+            padding: 1rem;
+            border-radius: .5rem;
+            margin-top: 1rem;
+        }
+
+        .lista_palavrasChave {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-top: 1rem;
+            cursor: default;
+            max-height: 148px;
+            overflow-y: auto;
+
+            li {
+                border-radius: 16px;
+                border: 2px solid $verde6;
+                background-color: $verde3;
+            }
+        }
+    }
+}

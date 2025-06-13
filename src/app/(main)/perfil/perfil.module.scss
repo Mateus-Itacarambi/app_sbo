@@ -1,0 +1,59 @@
+@import "../../styles/variaveis";
+
+.main {
+  height: calc(100vh - 12rem);
+  display: flex;
+  justify-content: center;
+  background-color: $cinza3;
+  padding: 2rem 0;
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: $verde9;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    overflow-y: scroll;
+    padding: 0 1rem 1rem 2rem;
+
+    &::-webkit-scrollbar
+    {
+        width: 8px;
+        border-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+        border-radius: 15px;
+        background-color: $verde9;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $verde10;
+        }
+    }
+
+    .card_container {
+      background-color: white;
+      padding: 2rem;
+      display: flex;
+      border-radius: 1.5rem;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+      gap: 2rem;
+      box-shadow: rgba(72, 121, 72, 0.245) 0px 3px 6px, rgba(72, 121, 72, 0.048) 0px 3px 6px;
+
+      p {
+        font-size: 1.6rem;
+        color: $cinza11;
+      }
+    }
+  }
+}
+  
+  
+
+  

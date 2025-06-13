@@ -1,0 +1,152 @@
+@import "../../styles/variaveis.scss";
+
+.dropdownContainer {
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid $cinza6;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    color: $cinza11;
+    transition: .3s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.aberto {
+        border: 2px solid $verde9;
+
+        .icone {
+            color: $verde10;
+        }
+    }
+
+    .labelRow {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+            font-size: 1.6rem;
+        }
+
+        button {
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            border: none;
+            background-color: white;
+            color: $cinza8;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .dropdownMenu {
+        max-height: 200px;
+
+        .inputComIcone {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-top: .5rem;
+
+            input {
+                width: 100%;
+                font-size: 1.6rem;
+                padding: 1rem;
+                border-radius: 1rem;
+                border: 2px solid $cinza6;
+                transition: .3s;
+                color: $cinza11;
+                padding-right: 3.5rem;
+
+                &:focus {
+                    outline: none;
+                    border: 2px solid $verde9;
+                }
+
+                &::placeholder {
+                    color: $cinza8;
+                }
+            }
+
+            .icone {
+                position: absolute;
+                right: 1rem;
+                cursor: pointer;
+                color: $cinza7;
+            }
+
+            &:focus-within .icone {
+                color: $verde10;
+            }
+        }
+
+        .optionsList {
+            max-height: 130px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-rows: 1fr;
+            gap: .5rem;
+            align-items: center;
+            margin-top: 1rem;
+
+            .optionItem {
+                display: flex;
+                align-items: center;
+                font-size: 1.3rem;
+                font-weight: 300;
+                gap: .4rem;
+
+                input[type=checkbox] {
+                    position: relative;
+                    cursor: pointer;
+                    width: 16px;
+                    height: 16px;
+                    margin: 0;
+                }
+                input[type=checkbox]:before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    top: 0;
+                    left: 0;
+                    border: 1px solid $cinza9;
+                    border-radius: 3px;
+                    background-color: white;
+                }
+                input[type=checkbox]:checked:before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    top: 0;
+                    left: 0;
+                    background-color:$verde9;
+                    border: 1px solid $verde9;
+                }
+                input[type=checkbox]:checked:after {
+                    content: "";
+                    display: block;
+                    width: 5px;
+                    height: 10px;
+                    border: solid white;
+                    border-width: 0 2px 2px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    position: absolute;
+                    top: 2px;
+                    left: 6px;
+                }
+            }
+        }
+    }
+}

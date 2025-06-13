@@ -1,0 +1,44 @@
+@import "../../styles/variaveis";
+@import "../auth.module.scss";
+
+
+.esqueceu_senha {
+    max-width: 39rem;
+    width: 100%;
+    h1 {
+        font-size: 4rem;
+        font-weight: 500;
+        margin-bottom: 3rem;
+    }
+
+    a {
+        color: $verde9;
+
+        &:nth-child(3) {
+            text-decoration: underline;
+            text-align: right;
+        }
+    }
+
+    p {
+        font-size: 1.6rem;
+        font-weight: 600;
+        line-height: 2rem;
+
+        span {
+            color: $verde9;
+            
+        }
+
+        &:nth-child(7) {
+            text-align: center;
+        }
+
+        &:nth-child(2) {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 4rem;
+            color: $cinza10;
+        }
+    }
+}

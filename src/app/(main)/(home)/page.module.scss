@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&display=swap');
+@import "../../styles/variaveis";
+
+.container {
+    max-width: 1600px;
+    height: calc(100vh - 8rem);
+    display: flex;
+    gap: 100px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+
+    .texto {
+        height: 550px;
+        display: flex;
+        gap: 7rem;
+        flex-direction: column;
+        font-family: "Advent Pro", serif;
+
+        h1 {
+            font-size: 9rem;
+            font-weight: 500;
+            color: $cinza12;
+        }
+
+        p {
+            font-size: 3rem;
+            font-weight: 400;
+            color: $cinza11;
+            line-height: 3.7rem;
+        }
+        
+        a {
+            margin: 0 auto;
+
+        button {
+            background-color: $verde9;
+            padding: 1.1rem 22rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 2.5rem;
+            cursor: pointer;
+            transition: .3s;
+
+            &:hover {
+                background-color: $verde11;
+            }
+        }
+    }
+    }
+}

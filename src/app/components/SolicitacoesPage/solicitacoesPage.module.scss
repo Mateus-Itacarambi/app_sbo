@@ -1,0 +1,215 @@
+@import "../../styles/variaveis";
+
+.tabela {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  background: white;
+
+  th, td {
+    padding: 1rem;
+    font-size: 1.3rem;
+    text-align: left;
+    border-bottom: 1px solid $verde5;
+  }
+
+  th {
+    background: $verde4;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 1.3rem 1rem;
+  }
+
+  button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: transparent;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: .4rem 0;
+    border-radius: .5rem;
+    transition: .3s;
+    height: fit-content;
+
+    &.aprovar {
+      background-color: $verde9;
+      color: white;
+      border: 2px solid $verde9;
+
+      &:hover {
+        background-color: $verde11;
+        border: 2px solid $verde11;
+      }
+
+      &:disabled {
+        background-color: $verde9;
+        border: 2px solid $verde9;
+        cursor: default;
+      }
+    }
+
+    &.rejeitar {
+      background-color: $vermelho9;
+      border: 2px solid $vermelho9;
+      color: white;
+
+      &:hover {
+        background-color: $vermelho11;
+      border: 2px solid $vermelho11;
+      }
+
+      &:disabled {
+        background-color: $vermelho9;
+        border: 2px solid $vermelho9;
+        cursor: default;
+      }
+    }
+
+    &.ver {
+      gap: .3rem;
+      color: $cinza11;
+      border: 2px solid $cinza10;
+
+      &:hover {
+        background-color: $cinza3;
+      }
+    }
+
+    span {
+        border: 0.4rem solid rgba(255, 255, 255, 0.3);
+        border-top: 0.4rem solid white;
+        border-radius: 50%;
+        width: 1.6rem;
+        height: 1.6rem;
+        animation: spin 0.8s linear infinite;
+        display: inline-block;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+    &.botaoMostrarTodos {
+      width: 100%;
+      font-weight: 500;
+      padding: 1rem;
+      border-radius: .6rem;
+      border: 2px solid $cinza6;
+      transition: .3s;
+      color: $cinza10;
+      margin: 0;
+      gap: .4rem;
+
+      &:hover {
+        border: 2px solid $cinza11;
+        color: $cinza11;
+        background-color: $cinza3;
+      }
+    }
+  }
+
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 25%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    a {
+      color: $cinza12;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 35%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 12%;
+  }
+
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 12%;
+  }
+
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: 16%;
+
+  }
+}
+
+.tabela tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.tabela tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.inputComIcone {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 100%;
+        font-size: 1.4rem;
+        padding: 1rem;
+        border-radius: .6rem;
+        border: 2px solid $cinza6;
+        transition: .3s;
+        color: $cinza11;
+        padding-right: 3.5rem;
+
+        &:focus {
+            outline: none;
+            border: 2px solid $verde9;
+        }
+
+        &::placeholder {
+            color: $cinza8;
+        }
+    }
+
+    .icone {
+        position: absolute;
+        right: 1rem;
+        cursor: pointer;
+        color: $cinza7;
+    }
+
+    &:focus-within .icone {
+        color: $verde10;
+    }
+}
+
+.motivo {
+  background-color: $vermelho3;
+  padding: 1.5rem 1rem;
+  border-radius: .5rem;
+
+  strong {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+}
+
+.status {
+  padding: 1rem;
+}

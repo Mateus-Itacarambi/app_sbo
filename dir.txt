@@ -1,0 +1,23 @@
+|_ app/
+   |_ layout.tsx
+   |_ (auth)
+   |  |_ layout.tsx
+   |  |_ login
+   |  |   |_ page.tsx
+   |  |_ register
+   |      |_ page.tsx
+   |_ admin
+   |  |_ layout.tsx
+   |  |_ page.tsx
+   |  |_ users
+   |  |   |_ page.tsx
+   |  |_ ...
+   |_ (main)
+   |  |_ layout.tsx
+   |  |_ (home)
+   |  |   |_ _components
+   |  |   |   |_ ....
+   |  |   |_ page.tsx
+   |  |_ profile
+   |      |_ [username]
+   |        |_ page.tsx

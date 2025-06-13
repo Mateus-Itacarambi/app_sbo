@@ -1,0 +1,38 @@
+@import "../../styles/variaveis";
+
+.badge {
+  display: block;
+    font-size: 1.4rem;
+    padding: 4px 12px;
+    border-radius: 12px;
+    max-width: 130px;
+    width: 100%;
+    text-align: center;
+    height: fit-content;
+  }
+
+  .RESERVADO, .PENDENTE {
+    background-color: $amarelo4;
+    color: $amarelo11;
+  }
+  
+  .EM_ANDAMENTO, .CONCLUIDA {
+    background-color: $azul5;
+    color: $azul11;
+  }
+  
+  .DISPONIVEL, .APROVADA {
+    background-color: $verde4;
+    color: $verde11;
+  }
+  
+  .INDISPONIVEL, .REJEITADA, .CANCELADA {
+    background-color: $vermelho5;
+    color: $vermelho9;
+  }
+  
+  .CONCLUIDO {
+    background-color: $cinza5;
+    color: $cinza11;
+  }
+  
