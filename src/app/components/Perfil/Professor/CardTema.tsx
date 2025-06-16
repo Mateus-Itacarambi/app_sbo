@@ -14,41 +14,9 @@ interface CardTemaProps {
   onAdicionarTema: () => void;
   mostrarBotoes: boolean;
   isLoading: boolean;
-  atualizarTemas: () => void;
 }
 
-export default function CardTema({ temas, mostrarBotoes, onGerenciar, onAdicionarTema, isLoading, atualizarTemas }: CardTemaProps) {
-  const [solicitados, setSolicitados] = useState<Set<number>>(new Set());
-  const [loading, setLoading] = useState(false);
-  const solicitacaoActions = useSolicitacaoActions();
-  
-  const solicitarTema = async (temaId: number) => {
-    setLoading(true);
-    try {
-      await solicitacaoActions.handleSolicitarTema(temaId);
-      setSolicitados(prev => new Set(prev).add(temaId));
-      await atualizarTemas();
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const cancelarSolicitacao = async (temaId: number, idSolicitacao: number) => {
-    setLoading(true);
-    try {
-      await solicitacaoActions.handleCancelarOrientacao(idSolicitacao, "cancelar");
-      setSolicitados(prev => {
-        const novo = new Set(prev);
-        novo.delete(temaId);
-        return novo;
-      });
-      await atualizarTemas();
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
+export default function CardTema({ temas, mostrarBotoes, onGerenciar, onAdicionarTema, isLoading }: CardTemaProps) {
   if (!temas || temas.length === 0) {
     return (
       <>
@@ -89,29 +57,11 @@ export default function CardTema({ temas, mostrarBotoes, onGerenciar, onAdiciona
           ?.slice()
           .sort((a, b) => a.titulo.localeCompare(b.titulo))
           .map((tema, idx) => {
-            const estaSolicitado = solicitados.has(tema.id);
             return (
               <li key={idx} className={styles.tema}>
                 <div className={styles.tema_content}>
                   <div className={styles.title}>
                     {tema.titulo}
-                    {tema.statusTema === "DISPONIVEL" && !mostrarBotoes && (
-                      <ButtonAuth
-                        text={estaSolicitado ? "Cancelar" : "Solicitar"}
-                        type="button"
-                        theme={"primary"}
-                        margin="0"
-                        onClick={() => {
-                          if (!estaSolicitado) {
-                            solicitarTema(tema.id);
-                          } else {
-                            cancelarSolicitacao(tema.id, tema.idSolicitacao!);
-                          }
-                        }}
-                        loading={loading}
-                        className={estaSolicitado ? styles.cancelar : styles.solicitar}
-                      />
-                    )}
                   </div>
                   <StatusBadge status={tema.statusTema as StatusTipo} />
                   <div className={styles.keywords}>{tema.palavrasChave}</div>
