@@ -58,7 +58,7 @@ export default function AtualizarCadastro() {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/professores/atualizar-cadastro`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/professores/atualizar-cadastro`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

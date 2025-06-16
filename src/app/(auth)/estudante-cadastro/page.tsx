@@ -46,7 +46,7 @@ export default function Cadastro() {
   useEffect(() => {
     async function fetchCursos() {
       try {
-        const response = await fetch("http://localhost:8080/cursos/lista");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cursos/lista`);
 
          if (!response.ok) {
           const errorData = await response.text();
@@ -105,7 +105,7 @@ export default function Cadastro() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/estudantes", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/estudantes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

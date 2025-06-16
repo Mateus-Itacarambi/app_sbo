@@ -37,7 +37,7 @@ export default function UploadAreaInteresse() {
     formData.append("file", file);
   
     try {
-      const response = await fetch('http://localhost:8080/areasInteresse/importar-relatorio-csv', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/areasInteresse/importar-relatorio-csv`, {
         method: 'POST',
         body: formData,
         credentials: "include",

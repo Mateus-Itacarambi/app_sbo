@@ -36,7 +36,7 @@ export default function Perfil({ usuarioVisualizado }: PerfilProps) {
 
   useEffect(() => {
   const buscarDadosCompletos = async () => {
-    const res = await fetch("http://localhost:8080/auth/me", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
       credentials: "include",
     });
     const data = await res.json();
