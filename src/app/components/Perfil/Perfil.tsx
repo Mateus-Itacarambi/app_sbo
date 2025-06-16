@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./perfil.module.scss";
 
-import Loading from "@/components/Loading/loading";
+import Loading from "@/components/Loading";
 import Alerta from "@/components/Alerta";
 import ModalEditarPerfil from "@/components/Modal/ModalEditarPerfil";
 import ModalTemaEstudante from "@/components/Modal/Estudante/ModalTemaEstudante";

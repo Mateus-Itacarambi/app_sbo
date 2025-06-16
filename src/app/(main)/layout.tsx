@@ -3,7 +3,7 @@
 import "../globals.css";
 import NavBar from "../components/NavBar";
 import { AuthProvider } from "@/contexts/AuthContext";
-import Loading from "@/components/Loading/loading";
+import Loading from "@/components/Loading";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
