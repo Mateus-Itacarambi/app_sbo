@@ -368,16 +368,6 @@
 
     .areaInteresse {
       margin-top: 1rem;
-
-      button {
-        padding: 0;
-      }
-    }
-
-    .curso {
-      button {
-        padding: 0;
-      }
     }
     
   }
@@ -450,4 +440,10 @@
     column-gap: 3rem;
   }
 
+}
+
+.areaInteresse, .curso {
+  button {
+    padding: 0;
+  }
 }
