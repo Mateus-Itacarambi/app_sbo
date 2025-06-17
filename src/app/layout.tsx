@@ -1,3 +1,4 @@
+import TelaRestritaWrapper from "./components/TelaRestritaWrapper/TelaRestritaWrapper";
 import { AlertaProvider } from "./contexts/AlertaContext";
 import "./globals.css";
 import { Metadata } from "next";
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-        <AlertaProvider>
-          {children}
-        </AlertaProvider>
+        <TelaRestritaWrapper>
+          <AlertaProvider>
+            {children}
+          </AlertaProvider>
+        </TelaRestritaWrapper>
       </body>
     </html>
   );
