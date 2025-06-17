@@ -129,11 +129,13 @@ export default function AtualizarCadastro() {
             />
 
             <InputAuth
+              name="idLattes"
               label="ID Lattes"
               type="text"
               placeholder="Digite seu ID Lattes"
               value={idLattes}
               onChange={(e) => setIdLattes(e.target.value)}
+              autoComplete="off"
             />
 
             <InputAuth
@@ -143,6 +145,7 @@ export default function AtualizarCadastro() {
               placeholder="Digite seu email"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
             />
 
             <InputAuth
@@ -152,6 +155,7 @@ export default function AtualizarCadastro() {
               placeholder="Digite sua senha"
               value={senhaAtual}
               onChange={(e) => setSenhaAtual(e.target.value)}
+              autoComplete="off"
             />
 
             <InputAuth
@@ -161,6 +165,7 @@ export default function AtualizarCadastro() {
               placeholder="Digite sua nova senha"
               value={senhaNova}
               onChange={(e) => setSenhaNova(e.target.value)}
+              autoComplete="new-password"
             />
 
             <InputAuth
@@ -170,6 +175,7 @@ export default function AtualizarCadastro() {
               placeholder="Confirme sua nova senha"
               value={senhaConfirmar}
               onChange={(e) => setSenhaConfirmar(e.target.value)}
+              autoComplete="new-password"
             />
 
             <ButtonAuth

@@ -9,6 +9,7 @@ interface InputAuthProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   disabled?: boolean;
+  autoComplete?: string;
 }
 
 export default function InputAuth({
@@ -19,6 +20,7 @@ export default function InputAuth({
   value,
   onChange,
   disabled = false,
+  autoComplete,
 }: InputAuthProps) {
   function handleNumberKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
@@ -52,6 +54,7 @@ export default function InputAuth({
           onChange={onChange}
           disabled={disabled}
           onKeyDown={handleNumberKeyDown}
+          autoComplete={autoComplete}
         />
       ) : (
         <input
@@ -61,6 +64,7 @@ export default function InputAuth({
           value={value}
           onChange={onChange}
           disabled={disabled}
+          autoComplete={autoComplete}
         />
       )}
     </div>
