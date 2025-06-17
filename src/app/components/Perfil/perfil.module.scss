@@ -281,6 +281,7 @@
       border-radius: 16px;
       border: 3px solid $verde4;
       margin-top: 2rem;
+      white-space: nowrap;
     
       .tema_content {
         width: 100%;
@@ -368,6 +369,12 @@
     .areaInteresse {
       margin-top: 1rem;
 
+      button {
+        padding: 0;
+      }
+    }
+
+    .curso {
       button {
         padding: 0;
       }
