@@ -57,6 +57,8 @@ export default function AtualizarCadastro() {
       idLattes,
     };
 
+    console.log("Dados do professor:", formData.nome);
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/professores/atualizar-cadastro`, {
         method: "PUT",
@@ -107,7 +109,7 @@ export default function AtualizarCadastro() {
               name="nome"
               type="text"
               placeholder="Digite seu nome"
-              value={formData.nome}
+              value={formData.nome || ""}
               onChange={handleChange}
             />
 
@@ -143,7 +145,7 @@ export default function AtualizarCadastro() {
               name="email"
               type="email"
               placeholder="Digite seu email"
-              value={formData.email}
+              value={formData.email || ""}
               onChange={handleChange}
               autoComplete="email"
             />
