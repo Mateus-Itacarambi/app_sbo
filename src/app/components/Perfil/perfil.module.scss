@@ -444,6 +444,8 @@
 
 .areaInteresse, .curso {
   button {
+    min-width: 20px;
+    min-height: 20px;
     padding: 0;
   }
 }
