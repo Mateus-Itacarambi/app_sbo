@@ -47,6 +47,7 @@ useEffect(() => {
       setUsuario(data);
     } catch (error) {
       console.error("Erro ao buscar usuário:", error);
+      router.push("/login");
     } finally {
       setLoading(false);
     }
