@@ -3,15 +3,15 @@ import { handleFetchError } from "@/utils/handleFetchError";
 import { atualizarPerfil } from "@/services/perfilService";
 import { useRouter } from "next/navigation";
 
-export const usePerfilActions = (usuario: any, formData: any) => {
+export const usePerfilActions = (usuario: any) => {
   const router = useRouter();
   const identificadorAtual = usuario.role === "ESTUDANTE" ? usuario.matricula : usuario.idLattes;
   const { setErro, setSucesso, setIsLoading } = useAlertaTemporarioContext();
 
-  const handleAtualizarPerfil = async (e: React.FormEvent) => {
+  const handleAtualizarPerfil = async (formData: any) => {
     try {
       setIsLoading(true);
-      await atualizarPerfil(e, usuario, formData, identificadorAtual, router, setSucesso);
+      await atualizarPerfil(usuario, formData, identificadorAtual, router, setSucesso);
     } catch (error: any) {
       setErro(handleFetchError(error));
       setSucesso("");

@@ -9,7 +9,7 @@ interface ButtonAuthProps {
   disabled?: boolean;
   margin?: string;
   icon?: boolean;
-  loading: boolean;
+  loading?: boolean;
   className?: string;
 }
 

@@ -18,3 +18,10 @@ export interface ProfessorCurso {
   disponibilidade: string;
   idLattes: string;
 }
+
+export interface FormularioProfessorEditar {
+  nome: string;
+  dataNascimento: string;
+  genero: string;
+  idLattes: string;
+}

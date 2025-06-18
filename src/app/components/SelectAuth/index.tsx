@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./customSelect.module.scss";
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from "lucide-react";
 
 interface Option {
   label: string;
@@ -19,6 +19,7 @@ interface CustomSelectProps {
   padding?: string;
   margin?: string;
   fontSize?: string;
+  error?: string; // novo
 }
 
 export default function CustomSelect({
@@ -32,7 +33,8 @@ export default function CustomSelect({
   height,
   padding,
   margin,
-  fontSize
+  fontSize,
+  error, // novo
 }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -51,7 +53,7 @@ export default function CustomSelect({
   };
 
   const selectedLabel = options.find((opt) => String(opt.value) === selectedValue)?.label;
-  
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -74,25 +76,25 @@ export default function CustomSelect({
     <div className={styles.container_select}>
       {text && <label className={styles.label}>{text}</label>}
 
-      <div className={`${styles.select_wrapper} ${isOpen ? styles.aberto : ""} ${disabled ? styles.disabled : ""}`}  ref={containerRef} style={{ height: height, margin: margin, fontSize: fontSize }}>
-
-        <input
-          type="hidden"
-          name={name}
-          value={selectedValue}
-        />
+      <div
+        className={`${styles.select_wrapper} ${isOpen ? styles.aberto : ""} ${
+          disabled ? styles.disabled : ""
+        } ${error ? styles.error : ""}`}
+        ref={containerRef}
+        style={{ height, margin, fontSize }}
+      >
+        <input type="hidden" name={name} value={selectedValue} />
 
         <div
           className={`${styles.select_display} ${disabled ? styles.disabled : ""}`}
           onClick={() => !disabled && setIsOpen((prev) => !prev)}
           tabIndex={0}
-          style={{ padding: padding}}
+          style={{ padding }}
         >
           {selectedLabel || <span className={styles.placeholder}>{placeholder}</span>}
-
           <ChevronDown className={styles.icone} />
         </div>
-        
+
         {isOpen && (
           <div className={`${styles.options_list} ${isOpen ? styles.aberto : ""}`}>
             {options.map((option) => (
@@ -107,6 +109,7 @@ export default function CustomSelect({
           </div>
         )}
       </div>
+      {error && <span className={styles.error_text}>{error}</span>}
     </div>
   );
 }

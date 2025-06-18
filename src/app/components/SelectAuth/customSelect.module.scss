@@ -1,5 +1,9 @@
 @import "../../styles/variaveis";
 
+.container_select {
+  margin-bottom: 3rem;
+}
+
 .select_wrapper {
   display: flex;
   align-items: center;
@@ -11,7 +15,6 @@
   color: $cinza11;
   border: 2px solid $cinza6;
   border-radius: .6rem;
-  margin-bottom: 3rem;
 
   &:hover {
     border: 2px solid $verde9;
@@ -111,4 +114,13 @@
   &:hover {
     background-color: $cinza3;
   }
+}
+
+.error_text {
+  color: #d9534f;
+  font-size: 1rem;
+}
+
+.select_wrapper.error {
+  border: 2px solid #d9534f;
 }

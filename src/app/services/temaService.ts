@@ -2,14 +2,7 @@ import { Estudante, Professor, TemaDTO, UsuarioCompleto } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export interface TemaPayload {
-  titulo: string;
-  palavrasChave: string;
-  descricao: string;
-}
-
-export const cadastrarTema = async (e: React.FormEvent, usuario: Estudante, dados: TemaPayload) => {
-  e.preventDefault();
+export const cadastrarTema = async (usuario: Estudante, dados: TemaDTO) => {
   const response = await fetch(`${API_URL}/temas/estudante/${usuario.id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -32,8 +25,7 @@ export const adicionarTema = async (usuario: Professor, dados: TemaDTO): Promise
   return novoTema;
 };
 
-export const atualizarTema = async (e: React.FormEvent, usuario: Estudante, dados: TemaPayload) => {
-  e.preventDefault();
+export const atualizarTema = async (usuario: Estudante, dados: TemaDTO) => {
   const response = await fetch(`${API_URL}/temas/${(usuario as Estudante).tema?.id}/atualizar/${usuario.id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -69,9 +61,8 @@ export const removerTema = async (usuario: UsuarioCompleto, temaId: number) => {
   if (!response.ok) throw new Error(await response.text());
 };
 
-export const adicionarEstudanteTema = async (e: React.FormEvent, usuario: UsuarioCompleto,  matricula: string) => {
+export const adicionarEstudanteTema = async (usuario: UsuarioCompleto,  matricula: string) => {
   if (!usuario || !(usuario as Estudante).tema) return;
-  e.preventDefault();
   const response = await fetch(`${API_URL}/temas/${(usuario as Estudante).tema?.id}/adicionarEstudante/${usuario.id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -89,9 +80,8 @@ export const adicionarEstudanteTema = async (e: React.FormEvent, usuario: Usuari
   return await response.json();
 };
 
-export const removerEstudanteTema = async (e: React.FormEvent, usuario: UsuarioCompleto,  matricula: string) => {
+export const removerEstudanteTema = async (usuario: UsuarioCompleto,  matricula: string) => {
   if (!usuario || !(usuario as Estudante).tema) return;
-  e.preventDefault();
   const response = await fetch(`${API_URL}/temas/${(usuario as Estudante).tema?.id}/removerEstudante/${usuario.id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },

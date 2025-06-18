@@ -8,17 +8,16 @@ import {
   removerTema,
   adicionarEstudanteTema,
   removerEstudanteTema,
-  TemaPayload,
 } from "@/services/temaService";
 import { TemaDTO } from "@/types";
 
 export const useTemaActions = (usuario: any) => {
   const { setErro, setSucesso, setIsLoading } = useAlertaTemporarioContext();
 
-  const handleCadastrarTema = async (e: React.FormEvent, dados: TemaPayload) => {
+  const handleCadastrarTema = async (dados: TemaDTO) => {
     try {
       setIsLoading(true);
-      await cadastrarTema(e, usuario, dados);
+      await cadastrarTema(usuario, dados);
       localStorage.setItem("mensagemSucesso", "Tema cadastrado com sucesso!");
       location.reload();
     } catch (error: any) {
@@ -45,10 +44,10 @@ export const useTemaActions = (usuario: any) => {
     }
   };
 
-  const handleAtualizarTema = async (e: React.FormEvent, dados: TemaPayload) => {
+  const handleAtualizarTema = async (dados: TemaDTO) => {
     try {
       setIsLoading(true);
-      await atualizarTema(e, usuario, dados);
+      await atualizarTema(usuario, dados);
       localStorage.setItem("mensagemSucesso", "Tema atualizado com sucesso!");
       location.reload();
     } catch (error: any) {
@@ -103,10 +102,10 @@ export const useTemaActions = (usuario: any) => {
     }
   };
 
-  const handleAdicionarEstudanteTema = async (e: React.FormEvent, matricula: string) => {
+  const handleAdicionarEstudanteTema = async (matricula: string) => {
     try {
       setIsLoading(true);
-      await adicionarEstudanteTema(e, usuario, matricula);
+      await adicionarEstudanteTema(usuario, matricula);
       localStorage.setItem("mensagemSucesso", "Estudante adicionado com sucesso!");
       location.reload();
     } catch (error: any) {
@@ -118,10 +117,10 @@ export const useTemaActions = (usuario: any) => {
     }
   };
 
-  const handleRemoverEstudanteTema = async (e: React.FormEvent, matricula: string) => {
+  const handleRemoverEstudanteTema = async (matricula: string) => {
     try {
       setIsLoading(true);
-      await removerEstudanteTema(e, usuario, matricula);
+      await removerEstudanteTema(usuario, matricula);
       localStorage.setItem("mensagemSucesso", "Estudante removido com sucesso!");
       location.reload();
     } catch (error: any) {

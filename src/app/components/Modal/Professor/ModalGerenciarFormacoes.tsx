@@ -1,3 +1,4 @@
+import { useForm, Controller } from "react-hook-form";
 import { Formacao, FormacaoDTO } from "@/types";
 import ReactDOM from "react-dom";
 import InputAuth from "../../InputAuth";
@@ -6,6 +7,8 @@ import { useFormacoes } from "@/hooks/useFormacoes";
 import { useEffect, useState } from "react";
 import styles from "./modalGerenciarFormacoes.module.scss";
 import ModalConfirmar from "../ModalConfirmar";
+import { schemaFormacao } from "@/utils/validacoesForm";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface ModalGerenciarFormacoesProps {
   onClose: () => void;
@@ -33,18 +36,33 @@ export default function ModalGerenciarFormacoes({ onClose, onAtualizar, onRemove
     setFormacoes,
     formacaoAtual,
     setFormacaoAtual,
-    formularioEdicao,
     setFormularioEdicao,
-    handleEditar,
   } = useFormacoes();
+
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<FormacaoDTO>({
+    resolver: yupResolver(schemaFormacao),
+  });
+
+  useEffect(() => {
+    if (formacaoAtual) {
+      reset({
+        curso: formacaoAtual.curso,
+        instituicao: formacaoAtual.instituicao,
+        titulo: formacaoAtual.titulo,
+        anoInicio: formacaoAtual.anoInicio,
+        anoFim: formacaoAtual.anoFim,
+      });
+    }
+  }, [formacaoAtual, reset]);
 
   useEffect(() => {
     setFormacoes(formacoesIniciais);
   }, [formacoesIniciais]);
-
-  const handleChange = (campo: keyof Formacao, valor: string) => {
-    setFormularioEdicao({ ...formularioEdicao, [campo]: valor })
-  };
 
   const handleCliqueFormacao = (formacao: Formacao) => {
     const formacaoClicada = formacoes.find((f) => f.id === formacao.id);
@@ -56,25 +74,18 @@ export default function ModalGerenciarFormacoes({ onClose, onAtualizar, onRemove
     setFormularioEdicao({ ...formacaoClicada });
   };
 
-  const handleSubmit = async () => {
-    if (formacaoAtual?.id === undefined) {
-      console.error("ID da formação não definido.");
-      return;
-    }
-
+  const onSubmit = async (data: FormacaoDTO) => {
+    if (!formacaoAtual?.id) return;
     try {
-      await onAtualizar( formacaoAtual.id, formularioEdicao);
+      await onAtualizar(formacaoAtual.id, data);
 
       setFormacoes((prev) =>
-        prev.map((f) =>
-          f.id === formacaoAtual.id ? { ...f, ...formularioEdicao } : f
-        )
+        prev.map((f) => (f.id === formacaoAtual.id ? { ...f, ...data } : f))
       );
     } catch (error) {
       console.error("Erro ao atualizar formação:", error);
     }
   };
-
 
   const handleRemove = () => {
     if (formacaoAtual?.id === undefined) {
@@ -102,17 +113,76 @@ export default function ModalGerenciarFormacoes({ onClose, onAtualizar, onRemove
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal_form} onClick={(e) => e.stopPropagation()}>
         <h2>Gerenciar Formações</h2>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <InputAuth label="Curso" type="text" value={formularioEdicao.curso} onChange={(e) => handleChange("curso", e.target.value)} />
-          <InputAuth label="Instituição" type="text" value={formularioEdicao.instituicao} onChange={(e) => handleChange("instituicao", e.target.value)} />
-          <InputAuth label="Título do TCC" type="text" value={formularioEdicao.titulo} onChange={(e) => handleChange("titulo", e.target.value)} />
-
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="curso"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputAuth
+                label="Curso"
+                type="text"
+                value={field.value}
+                onChange={field.onChange}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="instituicao"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputAuth
+                label="Instituição"
+                type="text"
+                value={field.value}
+                onChange={field.onChange}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="titulo"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputAuth
+                label="Título do TCC"
+                type="text"
+                value={field.value}
+                onChange={field.onChange}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
           <div className={styles.flex}>
-            <InputAuth label="Ano de Início" type="number" value={formularioEdicao.anoInicio.toString()} onChange={(e) => handleChange("anoInicio", e.target.value)} />
-            <InputAuth label="Ano de Conclusão" type="number" value={formularioEdicao.anoFim.toString()} onChange={(e) => handleChange("anoFim", e.target.value)} />
+            <Controller
+              name="anoInicio"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Ano de Início"
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="anoFim"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Ano de Conclusão"
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
 
-            <ButtonAuth type="submit" text={"Remover Formação"} theme="secondary" margin="0" loading={isLoading} onClick={() => setModalConfirmarRemocaoFormacao(true)} />
-            <ButtonAuth type="submit" text={"Atualizar Formação"} theme="primary" margin="0" loading={isLoading} onClick={handleSubmit} />
+            <ButtonAuth type="submit" text={"Remover Formação"} theme="secondary" margin="0" disabled={isLoading} onClick={() => setModalConfirmarRemocaoFormacao(true)} />
+            <ButtonAuth type="submit" text={"Atualizar Formação"} theme="primary" margin="0" loading={isLoading} />
           </div>
         </form>
       </div>

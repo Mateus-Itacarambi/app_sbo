@@ -1,15 +1,14 @@
 import React from "react";
 import styles from "./input.module.scss";
 
-interface InputAuthProps {
+interface InputAuthProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name?: string;
   type: "text" | "email" | "password" | "date" | "tel" | "textarea" | "number";
   placeholder?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  disabled?: boolean;
-  autoComplete?: string;
+  value?: string | number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  error?: string;
 }
 
 export default function InputAuth({
@@ -21,9 +20,16 @@ export default function InputAuth({
   onChange,
   disabled = false,
   autoComplete,
+  error,
+  ...rest
 }: InputAuthProps) {
   function handleNumberKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
+
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') {
+      return;
+    }
+
     if (
       !allowedKeys.includes(e.key) &&
       (isNaN(Number(e.key)) || e.key === ' ')
@@ -32,41 +38,44 @@ export default function InputAuth({
     }
   }
 
+  const commonProps = {
+    name,
+    placeholder,
+    value,
+    onChange,
+    disabled,
+    autoComplete,
+    className: error ? styles.error_input : undefined,
+    ...rest,
+  };
+
   return (
     <div className={styles.input_field}>
       <label>{label}</label>
       {type === "textarea" ? (
         <textarea
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className={styles.textarea}
+          {...(commonProps as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           maxLength={200}
         />
       ) : type === "number" ? (
         <input
-          name={name}
           type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
           onKeyDown={handleNumberKeyDown}
-          autoComplete={autoComplete}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData('Text');
+            if (!/^\d+$/.test(pasted)) {
+              e.preventDefault();
+            }
+          }}
+          {...commonProps}
         />
       ) : (
         <input
-          name={name}
           type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          autoComplete={autoComplete}
+          {...commonProps}
         />
       )}
+      {error && <span className={styles.error_text}>{error}</span>}
     </div>
   );
 }

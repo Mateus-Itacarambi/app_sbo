@@ -1,12 +1,14 @@
-import { Formacao, FormacaoDTO, Tema, TemaDTO } from "@/types";
+import { useForm, Controller } from "react-hook-form";
+import { Tema, TemaDTO } from "@/types";
 import ReactDOM from "react-dom";
 import InputAuth from "../../InputAuth";
 import ButtonAuth from "@/components/ButtonAuth";
-import { useFormacoes } from "@/hooks/useFormacoes";
 import { useEffect, useState } from "react";
 import styles from "./modalGerenciarFormacoes.module.scss";
 import ModalConfirmar from "../ModalConfirmar";
 import { useTemas } from "@/hooks";
+import { schemaFormacao, schemaTema } from "@/utils/validacoesForm";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface ModalGerenciarFormacoesProps {
   onClose: () => void;
@@ -38,6 +40,25 @@ export default function ModalGerenciarFormacoes({ onClose, onAtualizar, onRemove
     setFormularioEdicao,
     handleEditar,
   } = useTemas();
+  
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<TemaDTO>({
+    resolver: yupResolver(schemaTema),
+  });
+
+  useEffect(() => {
+    if (temaAtual) {
+      reset({
+        titulo: temaAtual.titulo,
+        palavrasChave: temaAtual.palavrasChave,
+        descricao: temaAtual.descricao,
+      });
+    }
+  }, [temaAtual, reset]);
 
   useEffect(() => {
     setTemas(temasIniciais);
@@ -56,20 +77,14 @@ export default function ModalGerenciarFormacoes({ onClose, onAtualizar, onRemove
     setTemaAtual({ ...temaClicado });
     setFormularioEdicao({ ...temaClicado });
   };
-
-  const handleSubmit = async () => {
-    if (temaAtual?.id === undefined) {
-      console.error("ID do tema não definido.");
-      return;
-    }
-
+  
+  const onSubmit = async (data: TemaDTO) => {
+    if (!temaAtual?.id) return;
     try {
-      await onAtualizar(temaAtual.id, formularioEdicao);
+      await onAtualizar(temaAtual.id, data);
 
       setTemas((prev) =>
-        prev.map((t) =>
-          t.id === temaAtual.id ? { ...t, ...formularioEdicao } : t
-        )
+        prev.map((t) => (t.id === temaAtual.id ? { ...t, ...data } : t))
       );
     } catch (error) {
       console.error("Erro ao atualizar tema:", error);
@@ -108,15 +123,51 @@ export default function ModalGerenciarFormacoes({ onClose, onAtualizar, onRemove
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal_form} onClick={(e) => e.stopPropagation()}>
         <h2>Gerenciar Temas</h2>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <InputAuth label="Título" type="text" value={formularioEdicao.titulo} onChange={(e) => handleChange("titulo", e.target.value)} />
-            <InputAuth label="Palavras-Chave" type="text" value={formularioEdicao.palavrasChave} onChange={(e) => handleChange("palavrasChave", e.target.value)} />
-            <InputAuth label="Descrição" type="textarea" value={formularioEdicao.descricao} onChange={(e) => handleChange("descricao", e.target.value)} />
+            <Controller
+              name="titulo"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Título"
+                  type="text"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="palavrasChave"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Palavras-Chave"
+                  type="text"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="descricao"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Descrição"
+                  type="textarea"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
           </div>
           <div className={styles.flex}>
-            <ButtonAuth type="submit" text={"Remover Tema"} theme="secondary" margin="0" loading={isLoading} onClick={() => setModalConfirmarRemocaoTema(true)} />
-            <ButtonAuth type="submit" text={"Atualizar Tema"} theme="primary" margin="0" loading={isLoading} onClick={handleSubmit} />
+            <ButtonAuth type="submit" text={"Remover Tema"} theme="secondary" margin="0" disabled={isLoading} onClick={() => setModalConfirmarRemocaoTema(true)} />
+            <ButtonAuth type="submit" text={"Atualizar Tema"} theme="primary" margin="0" loading={isLoading} />
           </div>
         </form>
       </div>

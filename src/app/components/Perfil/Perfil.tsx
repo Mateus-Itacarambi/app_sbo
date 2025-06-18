@@ -60,7 +60,7 @@ export default function Perfil({ usuarioVisualizado }: PerfilProps) {
   const form = useFormulario({});
   const cursos = useCursos(usuarioVisualizado, form.formData);
   const { orientador } = useOrientador(usuarioVisualizado);
-  const perfilActions = usePerfilActions(usuarioVisualizado, form.formData);
+  const perfilActions = usePerfilActions(usuarioVisualizado);
   const temaActions = useTemaActions(usuarioVisualizado);
   const formacaoActions = useFormacaoActions(usuarioVisualizado);
   const areaInteresseActions = useAreaInteresseActions(usuarioVisualizado);
@@ -124,28 +124,28 @@ export default function Perfil({ usuarioVisualizado }: PerfilProps) {
     modal.setModalFormacao(false);
   };
 
-  const cadastrarTema = async (e: React.FormEvent, titulo: string, palavrasChave: string, descricao: string) => {
-    await temaActions.handleCadastrarTema(e, { titulo: titulo, palavrasChave: palavrasChave, descricao: descricao });
+  const cadastrarTema = async (dados: TemaDTO) => {
+    await temaActions.handleCadastrarTema(dados);
   };
 
-  const atualizarTema = async (e: React.FormEvent, titulo: string, palavrasChave: string, descricao: string) => {
-    await temaActions.handleAtualizarTema(e, { titulo: titulo, palavrasChave: palavrasChave, descricao: descricao });
+  const atualizarTema = async (dados: TemaDTO) => {
+    await temaActions.handleAtualizarTema(dados);
   };
 
   const removerTema = async (temaId: number) => {
     await temaActions.handleRemoverTema(temaId);
   };
 
-  const adicionarEstudanteTema = async (e: React.FormEvent, matricula: string) => {
-    await temaActions.handleAdicionarEstudanteTema(e, matricula);
+  const adicionarEstudanteTema = async (matricula: string) => {
+    await temaActions.handleAdicionarEstudanteTema(matricula);
   };
 
-  const removerEstudanteTema = async (e: React.FormEvent, matricula: string) => {
-    await temaActions.handleRemoverEstudanteTema(e, matricula);
+  const removerEstudanteTema = async (matricula: string) => {
+    await temaActions.handleRemoverEstudanteTema(matricula);
   };
 
-  const atualizarPerfil = async (e: React.FormEvent) => {
-    await perfilActions.handleAtualizarPerfil(e);
+  const atualizarPerfil = async (formData: any) => {
+    await perfilActions.handleAtualizarPerfil(formData);
   };
 
   const adicionarFormacao = async (formacao: FormacaoDTO) => {
@@ -340,15 +340,9 @@ export default function Perfil({ usuarioVisualizado }: PerfilProps) {
       {modal.modalEditarPerfil && (
         <ModalEditarPerfil 
           usuario={usuarioVisualizado}
-          formData={form.formData}
           cursos={cursos.cursos}
-          semestresDisponiveis={cursos.semestresDisponiveis}
           onClose={() => modal.setModalEditarPerfil(false)}
           onSalvarPerfil={atualizarPerfil}
-          handleChange={form.handleChange}
-          handleGeneroChange={form.handleGeneroChange}
-          handleCursoChange={form.handleCursoChange}
-          handleSemestreChange={form.handleSemestreChange}
           handleCancelar={handleCancelar}
           isLoading={isLoading}
         />

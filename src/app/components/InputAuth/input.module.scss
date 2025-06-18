@@ -1,6 +1,8 @@
 @import "../../styles/variaveis";
 
 .input_field {
+    margin-bottom: 3rem;
+
     label {
         display: block;
         font-size: 1.6rem;
@@ -18,7 +20,6 @@
         padding: 1.5rem 1rem;
         border: 2px solid $cinza7;
         border-radius: .6rem;
-        margin-bottom: 3rem;
         outline: none;
         transition: .3s;
 
@@ -65,3 +66,11 @@
     }
   }
   
+.error_text {
+  color: #d9534f;
+  font-size: 1rem;
+}
+
+.error_input {
+  border-color: #d9534f !important;
+}

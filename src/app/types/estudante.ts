@@ -8,3 +8,14 @@ export interface Estudante extends Usuario {
   curso?: Curso | null;
   tema?: Tema | null;
 }
+
+export interface FormularioEstudante {
+  nome: string;
+  dataNascimento: string;
+  genero: string;
+  curso: string;
+  semestre: string;
+  matricula: string;
+  email: string;
+  senha: string;
+}
