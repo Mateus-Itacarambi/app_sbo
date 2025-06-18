@@ -8,22 +8,29 @@ import { useAlertaTemporarioContext } from "@/contexts/AlertaContext";
 import React from "react";
 import { handleFetchError } from "@/utils/handleFetchError";
 import Alerta from "@/components/Alerta";
-import { useRouter } from "next/navigation";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaEmail } from "../../utils/validacoesForm";
+
 
 export default function EsqueceuSenhaPage() {
-  const [email, setEmail] = useState("");
   const { isLoading, erro, sucesso, mostrarAlerta, setIsLoading, setErro, setSucesso } = useAlertaTemporarioContext();
-  const route = useRouter();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<{ email: string }>({
+    resolver: yupResolver(schemaEmail),
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: { email: string }) => {
     setIsLoading(true);
 
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/esqueceu-senha`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(data),
         });
 
         if (!res.ok) {
@@ -51,14 +58,22 @@ export default function EsqueceuSenhaPage() {
             <div className={styles.esqueceu_senha}>
                 <h1>ESQUECI MINHA SENHA</h1>
                 <p>Para redefinir sua senha, informe o e-mail cadastrado na sua conta e lhe enviaremos um link com as instruções.</p>
-                <form onSubmit={handleSubmit}>
-                    <InputAuth
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Controller
+                    name="email"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <InputAuth
                         label="E-mail"
                         type="email"
-                        placeholder="Seu e-mail"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                        placeholder="Digite seu email"
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={fieldState.error?.message}
+                        autoComplete="email"
+                      />
+                    )}
+                  />
 
                     <ButtonAuth
                         text={"Enviar"}

@@ -21,7 +21,7 @@ export default function CardTema({ areasInteresse, mostrarBotoes, onAdicionarAre
           </div>
           <p>Não possui áreas de interesse cadastradas.</p>
           {mostrarBotoes && (
-            <ButtonAuth text="Adicionar Áreas de Interesse" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarArea} loading={isLoading} />
+            <ButtonAuth text="Adicionar Áreas de Interesse" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarArea} disabled={isLoading} />
           )}
         </div>
       </>

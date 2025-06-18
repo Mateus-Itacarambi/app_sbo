@@ -3,7 +3,7 @@ import InputAuth from "../../InputAuth";
 import Modal from "../Modal";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schemaEstudante } from "../../../utils/validacoesForm";
+import { schemaMatricula } from "../../../utils/validacoesForm";
 
 interface ModalEstudanteTemaProps {
   titulo: string;
@@ -19,7 +19,7 @@ export default function ModalEstudanteTema({ titulo, onClose, onSubmit, isLoadin
     control,
     formState: { errors },
   } = useForm<{ matricula: string }>({
-    resolver: yupResolver(schemaEstudante),
+    resolver: yupResolver(schemaMatricula),
   });
 
   const handleFormSubmit = (data: { matricula: string }) => {

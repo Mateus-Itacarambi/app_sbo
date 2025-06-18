@@ -23,7 +23,7 @@ export default function CardOrientador({ orientador, mostrarBotoes, isLoading }:
             <p>Não possui orientador.</p>
             <Link href="/professores">
               {mostrarBotoes && (
-                <ButtonAuth text="Buscar orientador" type="button" theme="primary" margin="2rem 0 0 0" loading={isLoading} />
+                <ButtonAuth text="Buscar orientador" type="button" theme="primary" margin="2rem 0 0 0" disabled={isLoading} />
               )}
             </Link>
           </>

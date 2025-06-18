@@ -26,7 +26,7 @@ export default function CardTema({ temas, mostrarBotoes, onGerenciar, onAdiciona
           </div>
           <p>Não possui temas cadastradas.</p>
           {mostrarBotoes && (
-            <ButtonAuth text="Adicionar Tema" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarTema} loading={isLoading} />
+            <ButtonAuth text="Adicionar Tema" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarTema} disabled={isLoading} />
           )}
         </div>
       </>

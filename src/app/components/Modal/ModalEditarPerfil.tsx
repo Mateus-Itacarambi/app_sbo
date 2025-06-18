@@ -30,7 +30,6 @@ export default function ModalEditarPerfil({
   const estudante = usuario?.role === "ESTUDANTE" ? (usuario as Estudante) : null;
 
   const {
-    register,
     handleSubmit,
     control,
     watch,
@@ -62,7 +61,6 @@ export default function ModalEditarPerfil({
     return () => document.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-  // Atualiza os semestres disponíveis dinamicamente
   useEffect(() => {
     const curso = cursos.find((c) => String(c.value) === String(cursoSelecionado));
     if (curso) {

@@ -11,7 +11,42 @@ export const schemaCadastro = yup.object({
     .required("Matrícula é obrigatória")
     .matches(/^\d+$/, "Matrícula deve conter apenas números"),
   email: yup.string().email("Email inválido").required("Email é obrigatório"),
+  senha: yup.string().min(8, "A senha deve ter pelo menos 8 caracteres").required("Senha é obrigatória"),
+});
+
+export const schemaAtualizarCadastro = yup.object().shape({
+  nome: yup.string().required("Nome é obrigatório"),
+  dataNascimento: yup.string().required("Data de nascimento é obrigatória"),
+  genero: yup.string().required("Gênero é obrigatório"),
+  idLattes: yup.string().required("ID Lattes é obrigatório"),
+  email: yup.string().email("Email inválido").required("Email é obrigatório"),
+  senhaAtual: yup.string().required("Senha atual é obrigatória"),
+  senhaNova: yup.string().min(8, "A senha deve ter pelo menos 8 caracteres").required("Nova senha é obrigatória"),
+  senhaConfirmar: yup
+    .string()
+    .oneOf([yup.ref("senhaNova")], "As senhas não coincidem")
+    .required("Confirme a nova senha"),
+});
+
+export const schemaLogin = yup.object({
+  email: yup.string().email("Email inválido").required("Email é obrigatório"),
   senha: yup.string().required("Senha é obrigatória"),
+});
+
+export const schemaRedefinirSenha = yup.object({
+  senhaAtual: yup.string().when('$token', {
+    is: false,
+    then: (schema) => schema.required("Senha atual é obrigatória"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  novaSenha: yup
+    .string()
+    .min(8, "A nova senha deve ter pelo menos 8 caracteres")
+    .required("Nova senha é obrigatória"),
+  confirmarSenha: yup
+    .string()
+    .required("Confirme sua nova senha")
+    .oneOf([yup.ref("novaSenha")], "As senhas não coincidem"),
 });
 
 export const schemaEditarPerfil = yup.object().shape({
@@ -68,6 +103,14 @@ export const schemaFormacao = yup.object({
     }),
 });
 
-export const schemaEstudante = yup.object({
+export const schemaMatricula = yup.object({
   matricula: yup.string().required("Matrícula é obrigatória"),
+});
+
+export const schemaEmail = yup.object({
+  email: yup.string().required("E-mail é obrigatório"),
+});
+
+export const schemaMotivo = yup.object({
+  motivo: yup.string().required("Modivo é obrigatório"),
 });

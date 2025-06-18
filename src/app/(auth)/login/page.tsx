@@ -10,13 +10,32 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAlertaTemporarioContext } from "@/contexts/AlertaContext";
 import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaLogin } from "../../utils/validacoesForm";
+import { FormularioEstudante } from "@/types";
 
 export default function Login() {
   const { isLoading, erro, sucesso, mostrarAlerta, setIsLoading, setErro, setSucesso } = useAlertaTemporarioContext();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const router = useRouter();
-  const { usuario, setUsuario } = useAuth();
+  const { usuario } = useAuth();
+
+  interface FormularioLogin {
+    email: string;
+    senha: string;
+  }
+
+  const {
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormularioLogin>({
+    resolver: yupResolver(schemaLogin),
+  });
 
   useEffect(() => {
     if (usuario) {
@@ -24,9 +43,13 @@ export default function Login() {
     }
   }, [usuario]);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async (dados: FormularioLogin) => {
     setIsLoading(true);
+    
+    const login = {
+      email: dados.email,
+      senha: dados.senha,
+    };
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
@@ -35,11 +58,10 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, senha }),
+        body: JSON.stringify(login),
       });
 
       if (response.ok) {
-        const data = await response.json();
         router.push("/");
 
       } else {
@@ -65,21 +87,35 @@ export default function Login() {
           <h1>BEM-VINDO DE VOLTA</h1>
           <p>Bem-vindo de volta! Por favor, entre com suas credenciais.</p>
 
-          <form onSubmit={handleLogin}>
-            <InputAuth
-              label="E-mail"
-              type="email"
-              placeholder="Entre com seu email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+          <form onSubmit={handleSubmit(handleLogin)}>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="E-mail"
+                  type="email"
+                  placeholder="Digite seu email"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                />
+              )}
             />
 
-            <InputAuth
-              label="Senha"
-              type="password"
-              placeholder="***************"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
+            <Controller
+              name="senha"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Senha"
+                  type="password"
+                  placeholder="Digite sua senha"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                />
+              )}
             />
 
             <Link href="/esqueceu-senha">

@@ -66,7 +66,7 @@ export default function CardTema({ usuario, onEditar, onRemover, onAdicionarEstu
         <>
           <p>Não possui um tema cadastrado.</p>
           {mostrarBotoes && (
-            <ButtonAuth text="Adicionar Tema" type="button" theme="primary" onClick={onAdicionarTema} loading={isLoading} />
+            <ButtonAuth text="Adicionar Tema" type="button" theme="primary" onClick={onAdicionarTema} disabled={isLoading} />
           )}
         </>
       )}

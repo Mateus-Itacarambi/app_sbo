@@ -23,7 +23,7 @@ export default function CardFormacao({ formacoes, mostrarBotoes, onGerenciar, on
           </div>
           <p>Não possui formações cadastradas.</p>
           {mostrarBotoes && (
-            <ButtonAuth text="Adicionar Formação" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarFormacao} loading={isLoading} />
+            <ButtonAuth text="Adicionar Formação" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarFormacao} disabled={isLoading} />
           )}
         </div>
       </>

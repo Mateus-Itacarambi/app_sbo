@@ -2,25 +2,32 @@
 
 import styles from "./atualizar-cadastro.module.scss";
 import InputAuth from "../../components/InputAuth";
-import { useState, useEffect } from "react";
 import ButtonAuth from "@/components/ButtonAuth";
 import SelectAuth from "@/components/SelectAuth";
 import Alerta from "@/components/Alerta";
 import { generos } from "@/types";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useAlertaTemporario } from '@/hooks/useAlertaTemporario';
+import { useAlertaTemporario } from "@/hooks/useAlertaTemporario";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import { schemaAtualizarCadastro } from "@/utils/validacoesForm";
+
+type FormData = {
+  nome: string;
+  dataNascimento: string;
+  genero: string;
+  idLattes: string;
+  email: string;
+  senhaAtual: string;
+  senhaNova: string;
+  senhaConfirmar: string;
+};
 
 export default function AtualizarCadastro() {
-  const [formData, setFormData] = useState<any>({});
-  const { usuario, setUsuario } = useAuth();
+  const { usuario } = useAuth();
   const router = useRouter();
-  const [dataNascimento, setDataNascimento] = useState("");
-  const [idLattes, setIdLattes] = useState("");
-  const [senhaAtual, setSenhaAtual] = useState("");
-  const [senhaNova, setSenhaNova] = useState("");
-  const [senhaConfirmar, setSenhaConfirmar] = useState("");
-  const [genero, setGenero] = useState("");
 
   const {
     erro,
@@ -32,65 +39,59 @@ export default function AtualizarCadastro() {
     setIsLoading
   } = useAlertaTemporario();
 
-  useEffect(() => {
-    if (usuario) {
-      if (usuario.role !== "PROFESSOR" || usuario.cadastroCompleto === true) {
-        router.push("/");
-      }
-      setFormData({ ...usuario });
-    }
-  }, [usuario]);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: yupResolver(schemaAtualizarCadastro),
+  });
 
-  const handleAtualizarCadastro = async (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (!usuario) return;
+
+    if (usuario?.role !== "PROFESSOR" || usuario?.cadastroCompleto) {
+      router.push("/");
+      return;
+    }
+
+    reset({
+      nome: usuario.nome || "",
+      dataNascimento: "",
+      genero: "",
+      idLattes: "",
+      email: usuario.email || "",
+      senhaAtual: "",
+      senhaNova: "",
+      senhaConfirmar: "",
+    });
+  }, [usuario, reset]);
+
+  const onSubmit = async (data: FormData) => {
+    setErro("");
+    setSucesso("");
     setIsLoading(true);
 
-    const professor = {
-      id: formData.id,
-      nome: formData.nome,
-      dataNascimento,
-      genero,
-      email: formData.email,
-      senhaAtual,
-      senhaNova,
-      senhaConfirmar,
-      idLattes,
-    };
-
-    console.log("Dados do professor:", formData.nome);
-
     try {
+      const payload = { id: usuario?.id, ...data };
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/professores/atualizar-cadastro`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(professor),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData || "Erro ao atualizar cadastro!");
-      }
+      if (!response.ok) throw new Error(await response.text());
 
       localStorage.setItem("mensagemSucesso", "Atualizado com sucesso!");
       location.reload();
     } catch (error: any) {
-      console.error("Erro ao atualizar cadastro:", error);
-      setErro(error.message || "Erro desconhecido.");
-      setSucesso("");
+      setErro(error.message || "Erro ao atualizar.");
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleGeneroChange = (value: string) => {
-    setFormData({ ...formData, genero: value });
   };
 
   return (
@@ -103,95 +104,81 @@ export default function AtualizarCadastro() {
           <h1>Atualizar Cadastro</h1>
           <p>Seja bem-vindo! Atualize seu acesso rapidamente.</p>
 
-          <form name="atualizar-cadastro" onSubmit={handleAtualizarCadastro}>
-            <InputAuth
-              label="Nome Completo"
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
               name="nome"
-              type="text"
-              placeholder="Digite seu nome"
-              value={formData.nome || ""}
-              onChange={handleChange}
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="Nome Completo" type="text" {...field} error={errors.nome?.message} />
+              )}
             />
 
-            <InputAuth
-              label="Data de nascimento"
+            <Controller
               name="dataNascimento"
-              type="date"
-              placeholder=""
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="Data de nascimento" type="date" {...field} error={errors.dataNascimento?.message} />
+              )}
             />
 
-            <SelectAuth
+            <Controller
               name="genero"
-              options={generos}
-              onChange={(value) => setGenero(value)}
-              text="Gênero"
-              placeholder="Selecione um gênero"
+              control={control}
+              render={({ field }) => (
+                <SelectAuth
+                  name="genero"
+                  text="Gênero"
+                  options={generos}
+                  selected={field.value}
+                  onChange={field.onChange}
+                  placeholder="Selecione um gênero"
+                  error={errors.genero?.message}
+                />
+              )}
             />
 
-            <InputAuth
+            <Controller
               name="idLattes"
-              label="ID Lattes"
-              type="text"
-              placeholder="Digite seu ID Lattes"
-              value={idLattes}
-              onChange={(e) => setIdLattes(e.target.value)}
-              autoComplete="off"
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="ID Lattes" type="text" {...field} error={errors.idLattes?.message} />
+              )}
             />
 
-            <InputAuth
-              label="Email"
+            <Controller
               name="email"
-              type="email"
-              placeholder="Digite seu email"
-              value={formData.email || ""}
-              onChange={handleChange}
-              autoComplete="email"
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="Email" type="email" {...field} error={errors.email?.message} autoComplete="email" />
+              )}
             />
 
-            <InputAuth
-              label="Senha Atual"
-              name="senhaAntiga"
-              type="password"
-              placeholder="Digite sua senha"
-              value={senhaAtual}
-              onChange={(e) => setSenhaAtual(e.target.value)}
-              autoComplete="off"
+            <Controller
+              name="senhaAtual"
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="Senha Atual" type="password" {...field} error={errors.senhaAtual?.message} autoComplete="new-password" />
+              )}
             />
 
-            <InputAuth
-              label="Nova Senha"
+            <Controller
               name="senhaNova"
-              type="password"
-              placeholder="Digite sua nova senha"
-              value={senhaNova}
-              onChange={(e) => setSenhaNova(e.target.value)}
-              autoComplete="new-password"
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="Nova Senha" type="password" {...field} error={errors.senhaNova?.message} />
+              )}
             />
 
-            <InputAuth
-              label="Confirmar Senha"
+            <Controller
               name="senhaConfirmar"
-              type="password"
-              placeholder="Confirme sua nova senha"
-              value={senhaConfirmar}
-              onChange={(e) => setSenhaConfirmar(e.target.value)}
-              autoComplete="new-password"
+              control={control}
+              render={({ field }) => (
+                <InputAuth label="Confirmar Senha" type="password" {...field} error={errors.senhaConfirmar?.message} />
+              )}
             />
 
-            <ButtonAuth
-              text="Cancelar"
-              type="reset"
-              theme="secondary"
-              loading={isLoading}
-            />
-            <ButtonAuth
-              text={"Atualizar"}
-              type="submit"
-              theme="primary"
-              loading={isLoading}
-            />
+            <ButtonAuth text="Cancelar" type="reset" theme="secondary" disabled={isLoading} />
+            <ButtonAuth text="Atualizar" type="submit" theme="primary" loading={isLoading} />
           </form>
         </div>
       </section>

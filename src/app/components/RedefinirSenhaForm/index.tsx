@@ -8,38 +8,39 @@ import InputAuth from "@/components/InputAuth";
 import ButtonAuth from "@/components/ButtonAuth";
 import Alerta from "@/components/Alerta";
 import styles from "./redefinirSenhaForm.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaRedefinirSenha } from "../../utils/validacoesForm";
 
 export default function RedefinirSenhaForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const { usuario, loading, logout } = useAuth();
   const router = useRouter();
-
-  const [senhaAtual, setSenhaAtual] = useState("");
-  const [novaSenha, setNovaSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-
   const { isLoading, setIsLoading, erro, sucesso, setErro, setSucesso, mostrarAlerta } = useAlertaTemporarioContext();
+
+  const {
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schemaRedefinirSenha),
+    context: { token: !!token },
+    defaultValues: {
+      senhaAtual: "",
+      novaSenha: "",
+      confirmarSenha: "",
+    },
+  });
 
   useEffect(() => {
     if (loading) return;
-
-    if (!token && !usuario) {
-      router.push("/login");
-    }
+    if (!token && !usuario) router.push("/login");
   }, [token, usuario, loading]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: any) => {
     setErro("");
     setSucesso("");
-
-    if (novaSenha !== confirmarSenha) {
-      setErro("As senhas não coincidem.");
-      return;
-    }
-
     setIsLoading(true);
 
     try {
@@ -48,8 +49,8 @@ export default function RedefinirSenhaForm() {
         : `${process.env.NEXT_PUBLIC_API_URL}/auth/alterar-senha`;
 
       const payload = token
-        ? { token, novaSenha }
-        : { senhaAtual, novaSenha };
+        ? { token, novaSenha: data.novaSenha }
+        : { senhaAtual: data.senhaAtual, novaSenha: data.novaSenha };
 
       const method = token ? "POST" : "PUT";
 
@@ -60,22 +61,12 @@ export default function RedefinirSenhaForm() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(errorText);
-      }
+      if (!res.ok) throw new Error(await res.text());
 
-      if (token) {
-        localStorage.setItem("mensagemSucesso", "Senha redefinida com sucesso!");
-        window.location.href = "/login";
-      } else {
-        setSenhaAtual("");
-        setNovaSenha("");
-        setConfirmarSenha("");
-        localStorage.setItem("mensagemSucesso", "Senha alterada com sucesso!");
-        logout();
-        window.location.href = "/login";
-      }
+      localStorage.setItem("mensagemSucesso", "Senha alterada com sucesso!");
+      logout();
+      router.push("/login");
+
     } catch (error: any) {
       setErro(handleFetchError(error));
     } finally {
@@ -90,30 +81,54 @@ export default function RedefinirSenhaForm() {
       )}
       <section>
         <div className={styles.esqueceu_senha}>
-          <h1>{token ? "Redefinição de Senha" : "Alterar Senha"}</h1>
-          <form onSubmit={handleSubmit}>
+          <h1>{token ? "Redefinir Senha" : "Alterar Senha"}</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
             {!token && (
-              <InputAuth
-                label="Senha atual"
-                type="password"
-                placeholder="Senha atual"
-                value={senhaAtual}
-                onChange={(e) => setSenhaAtual(e.target.value)}
+              <Controller
+                name="senhaAtual"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputAuth
+                    label="Senha atual"
+                    type="password"
+                    placeholder="Senha atual"
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={fieldState.error?.message}
+                    autoComplete="new-password"
+                  />
+                )}
               />
             )}
-            <InputAuth
-              label="Nova senha"
-              type="password"
-              placeholder="Nova senha"
-              value={novaSenha}
-              onChange={(e) => setNovaSenha(e.target.value)}
+            <Controller
+              name="novaSenha"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Nova senha"
+                  type="password"
+                  placeholder="Nova senha"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                  autoComplete="new-password"
+                />
+              )}
             />
-            <InputAuth
-              label="Confirmar nova senha"
-              type="password"
-              placeholder="Confirmar nova senha"
-              value={confirmarSenha}
-              onChange={(e) => setConfirmarSenha(e.target.value)}
+            <Controller
+              name="confirmarSenha"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputAuth
+                  label="Confirmar nova senha"
+                  type="password"
+                  placeholder="Confirmar nova senha"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                  autoComplete="new-password"
+                />
+              )}
             />
             <ButtonAuth
               text={token ? "Redefinir" : "Alterar"}

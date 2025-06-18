@@ -21,7 +21,7 @@ export default function CardCurso({ cursos, mostrarBotoes, onAdicionarCurso, onR
           </div>
           <p>Não possui cursos cadastrados.</p>
           {mostrarBotoes && (
-            <ButtonAuth text="Adicionar Cursos" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarCurso} loading={isLoading} />
+            <ButtonAuth text="Adicionar Cursos" type="button" theme="primary" margin="2rem 0 0 0" onClick={onAdicionarCurso} disabled={isLoading} />
           )}
         </div>
       </>
