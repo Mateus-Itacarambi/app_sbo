@@ -22,8 +22,8 @@ export default function ModalTemaEstudante({ usuario, onClose, atualizarTema, ca
       resolver: yupResolver(schemaTema),
       defaultValues: {
         titulo: (usuario as Estudante).tema?.titulo || "",
-        palavrasChave: (usuario as Estudante).tema?.titulo || "",
-        descricao: (usuario as Estudante).tema?.titulo || "",
+        palavrasChave: (usuario as Estudante).tema?.palavrasChave || "",
+        descricao: (usuario as Estudante).tema?.descricao || "",
       }
     });
     
