@@ -79,8 +79,8 @@ export default function ModalTemaEstudante({ usuario, onClose, atualizarTema, ca
             )}
           />
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
-              <ButtonAuth text="Cancelar" type="button" theme="secondary" onClick={onCancelar} disabled={isLoading} />
-              <ButtonAuth text={"Salvar"} type="submit" theme="primary" loading={isLoading} />
+              <ButtonAuth text="Cancelar" type="button" theme="secondary" margin="0" onClick={onCancelar} disabled={isLoading} />
+              <ButtonAuth text={"Salvar"} type="submit" theme="primary" margin="0" loading={isLoading} />
           </div>
         </form>
     </Modal>
