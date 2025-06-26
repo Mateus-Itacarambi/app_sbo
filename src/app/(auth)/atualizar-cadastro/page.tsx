@@ -109,7 +109,7 @@ export default function AtualizarCadastro() {
               name="nome"
               control={control}
               render={({ field }) => (
-                <InputAuth label="Nome Completo" type="text" {...field} error={errors.nome?.message} />
+                <InputAuth label="Nome Completo" type="text" placeholder="Digite seu nome completo" {...field} error={errors.nome?.message} />
               )}
             />
 
@@ -141,7 +141,7 @@ export default function AtualizarCadastro() {
               name="idLattes"
               control={control}
               render={({ field }) => (
-                <InputAuth label="ID Lattes" type="number" {...field} error={errors.idLattes?.message} />
+                <InputAuth label="ID Lattes" type="number" placeholder="Digite apenas o id do Lattes" {...field} error={errors.idLattes?.message} />
               )}
             />
 
@@ -149,7 +149,7 @@ export default function AtualizarCadastro() {
               name="email"
               control={control}
               render={({ field }) => (
-                <InputAuth label="Email" type="email" {...field} error={errors.email?.message} autoComplete="email" />
+                <InputAuth label="Email" type="email" placeholder="Digite seu email" {...field} error={errors.email?.message} autoComplete="email" />
               )}
             />
 
@@ -157,7 +157,7 @@ export default function AtualizarCadastro() {
               name="senhaAtual"
               control={control}
               render={({ field }) => (
-                <InputAuth label="Senha Atual" type="password" {...field} error={errors.senhaAtual?.message} autoComplete="new-password" />
+                <InputAuth label="Senha Atual" type="password" placeholder="Digite sua senha atual" {...field} error={errors.senhaAtual?.message} autoComplete="new-password" />
               )}
             />
 
@@ -165,7 +165,7 @@ export default function AtualizarCadastro() {
               name="senhaNova"
               control={control}
               render={({ field }) => (
-                <InputAuth label="Nova Senha" type="password" {...field} error={errors.senhaNova?.message} />
+                <InputAuth label="Nova Senha" type="password" placeholder="Digite sua nova senha" {...field} error={errors.senhaNova?.message} />
               )}
             />
 
@@ -173,7 +173,7 @@ export default function AtualizarCadastro() {
               name="senhaConfirmar"
               control={control}
               render={({ field }) => (
-                <InputAuth label="Confirmar Senha" type="password" {...field} error={errors.senhaConfirmar?.message} />
+                <InputAuth label="Confirmar Senha" type="password" placeholder="Confirme sua nova senha" {...field} error={errors.senhaConfirmar?.message} />
               )}
             />
 
