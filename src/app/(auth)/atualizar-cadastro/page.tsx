@@ -141,7 +141,7 @@ export default function AtualizarCadastro() {
               name="idLattes"
               control={control}
               render={({ field }) => (
-                <InputAuth label="ID Lattes" type="text" {...field} error={errors.idLattes?.message} />
+                <InputAuth label="ID Lattes" type="number" {...field} error={errors.idLattes?.message} />
               )}
             />
 
