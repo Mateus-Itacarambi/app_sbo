@@ -6,7 +6,7 @@ import { NotificacaoDTO } from "@/types/notificacao";
 type UseWebSocketNotificacoesProps = {
   userId: number;
   onNovaNotificacao: (notificacao: NotificacaoDTO) => void;
-  onRemoverNotificacao?: (idRemover: number) => void; // novo
+  onRemoverNotificacao?: (idRemover: number) => void;
 };
 
 export function useWebSocketNotificacoes({

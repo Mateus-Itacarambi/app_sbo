@@ -19,7 +19,7 @@ interface CustomSelectProps {
   padding?: string;
   margin?: string;
   fontSize?: string;
-  error?: string; // novo
+  error?: string;
 }
 
 export default function CustomSelect({
@@ -34,7 +34,7 @@ export default function CustomSelect({
   padding,
   margin,
   fontSize,
-  error, // novo
+  error,
 }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string>("");
